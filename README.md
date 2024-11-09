@@ -4,9 +4,7 @@ Private Facts is a web app to track your private info.
 
 [//]: # (Tahoe Logo)
 
-
 [//]: # (Badges: Build status,  UV, Python version, Downloads)
-
 
 #### Why private facts?
 
@@ -14,17 +12,17 @@ The project intends to be a demonstration of how to use [Tahoe-lafs]()  "provide
 
 ## Installation
 
-#### Install from source
+### Install from source
 
 ```bash
 git clone https://github.com/blaisep/private_facts.git && cd private_facts
 ```
 
-#### Install from (Docker) Image
+### Install from (Docker) Image
 
 TBA
 
-#### 
+### 
 
 ```bash
 a bash code block
@@ -34,7 +32,6 @@ a bash code block
 
 ### Run using a (OCI) container
 
-
 ```python
 A Python code block
 ```
@@ -42,7 +39,6 @@ A Python code block
 ## Feedback
 
 The project issue tracker is getting migrated. For now, feel free to open an issue and let us know how how to improve.
-
 
 ## Contributing
 
