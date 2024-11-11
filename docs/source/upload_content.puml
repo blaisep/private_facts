@@ -1,0 +1,24 @@
+@startuml
+skinparam Shadowing false
+
+actor "User" as user
+participant "Web\nApp" as app
+database "Tahoe\nAgent " as tahoe
+database "Storage\nGrid" as grid
+
+group User Uploads
+activate app
+user --> app : "Submits a form"
+activate tahoe
+app -> tahoe : Upload a file
+tahoe -> tahoe : create capability fURL
+tahoe -x  grid : send content in shares
+tahoe -> tahoe : Store fURL metadata??
+tahoe -> app : return capability fURL
+app -x app : store fURL
+app --> user : display content
+deactivate tahoe
+deactivate app
+
+end
+@enduml
