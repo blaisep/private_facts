@@ -4,4 +4,9 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "attrs==23.2.0",
+    "cryptography<42",
+    "tahoe-lafs>=1.19.0",
+    "wheel>=0.45.0",
+]
