@@ -28,6 +28,21 @@ TBA
 a bash code block
 ```
 
+### SvelteKit
+
+Requirements
+
+- NodeJs > 20.0
+- Pnpm
+
+Install dependencies and run:
+
+```sh
+cd packages
+pnpm install
+pnpm dev --open
+```
+
 ## Usage
 
 ### Run using a (OCI) container
