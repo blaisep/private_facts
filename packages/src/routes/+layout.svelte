@@ -1,0 +1,56 @@
+<script>
+  import NavBar from '$lib/components/nav-bar.svelte'
+</script>
+
+<div class='content'>
+  <NavBar />
+
+  <slot></slot>
+</div>
+
+<style>
+  :root {
+    --border-color: #3b3b3b;
+    --font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+    --navbar-height: 3em;
+    --theme-background: white;
+    --theme-color: #555555;
+  }
+
+  .content {
+    text-align: center;
+    margin: auto;
+    height: calc(100vh - 6em);
+    overflow: clip;
+    overflow-y: auto;
+  }
+
+  :global(body) {
+    margin: 0;
+    font-family: var(--font-family);
+    font-weight: 400;
+    background: var(--theme-background);
+    color: var(--theme-color);
+    overflow: clip;
+  }
+
+  :global(button){
+    margin: 1em;
+    width: 10em;
+    height: 3em;
+    font-family: var(--font-family-text);
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--button-color);
+  }
+
+  :global(button:hover) {
+    cursor: pointer;
+  }
+
+  :global(button:disabled) {
+    background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
+    color: light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
+    border-color: light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+  }
+</style>

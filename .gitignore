@@ -1,9 +1,14 @@
 node_modules
+introducer
+storage0
+storage1
+webapp
 
 # Output
 .output
 .vercel
-/.svelte-kit
+.svelte-kit
+packages/.svelte-kit
 /build
 
 # OS
@@ -11,6 +16,7 @@ node_modules
 Thumbs.db
 
 # Env
+.venv
 .env
 .env.*
 !.env.example
