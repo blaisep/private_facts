@@ -3,7 +3,7 @@
 </script>
 
 <div class='error-page'>
-  <h1>Supawiki</h1>
+  <h1>Private facts</h1>
 
   <h2>Oops... Something went wrong!</h2>
 

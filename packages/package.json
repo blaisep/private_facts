@@ -24,6 +24,7 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
-		"otplib": "^12.0.1"
+		"otpauth": "^9.3.5",
+		"qrcode": "^1.5.4"
 	}
 }

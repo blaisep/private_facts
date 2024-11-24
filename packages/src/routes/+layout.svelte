@@ -14,13 +14,14 @@
     --font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
     --navbar-height: 3em;
     --theme-background: white;
-    --theme-color: #555555;
+    --theme-color: #444;
   }
 
   .content {
     text-align: center;
     margin: auto;
     height: calc(100vh - 6em);
+    max-width: 60em;
     overflow: clip;
     overflow-y: auto;
   }
@@ -34,7 +35,7 @@
     overflow: clip;
   }
 
-  :global(button){
+  :global(button) {
     margin: 1em;
     width: 10em;
     height: 3em;
