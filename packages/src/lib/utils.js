@@ -1,12 +1,15 @@
 import * as OTPAuth from 'otpauth'
 
+let secret = new OTPAuth.Secret({ size: 20 })
+
 export const totp = () => {
   let totp = new OTPAuth.TOTP({
     issuer: 'Private data',
     label: 'otp',
-    algorithm: 'SHA1',
+    algorithm: 'SHA256',
     digits: 6,
     period: 300,
+    secret
   })
 
   let token = totp.generate()

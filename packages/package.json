@@ -24,7 +24,7 @@
 		"vitest": "^2.0.4"
 	},
 	"dependencies": {
-		"otpauth": "^9.3.5",
-		"qrcode": "^1.5.4"
+		"@paulmillr/qr": "^0.3.0",
+		"otpauth": "^9.3.5"
 	}
 }

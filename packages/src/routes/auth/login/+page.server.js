@@ -1,4 +1,3 @@
-import qrcode from 'qrcode'
 import { totp } from '$lib/utils'
 
 export const load = () => {
