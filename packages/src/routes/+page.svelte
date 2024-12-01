@@ -10,5 +10,5 @@
 <div class='landing-page'>
   <h1>Private facts</h1>
 
-  <button onclick={() => goto('/auth/login')}>Login</button>
+  <button onclick={() => goto('/dashboard')}>Dashboard</button>
 </div>

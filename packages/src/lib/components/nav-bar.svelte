@@ -11,7 +11,7 @@
 
   <div class='cluster nav-right'>
     <ul>
-      <li><button onclick={() => goto('/auth/login')}>Login</button></li>
+      <li><button onclick={() => goto('/dashboard')}>Dashboard</button></li>
     </ul>
   </div>
 </nav>

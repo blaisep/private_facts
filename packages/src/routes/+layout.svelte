@@ -13,6 +13,7 @@
     --border-color: #3b3b3b;
     --font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
     --navbar-height: 3em;
+    --shade-color: #ccc;
     --theme-background: white;
     --theme-color: #444;
   }
@@ -53,5 +54,15 @@
     background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
     color: light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
     border-color: light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+  }
+
+  :global(input) {
+    font-size: 0.9em;
+    font-weight: 400;
+    padding: 0 1em;
+    height: 3em;
+    border: none;
+    border-radius: 2px;
+    outline: solid thin var(--border-color);
   }
 </style>
