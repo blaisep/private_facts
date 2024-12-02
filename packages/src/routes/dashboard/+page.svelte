@@ -2,6 +2,7 @@
   import { enhance } from '$app/forms'
   import { beforeNavigate } from '$app/navigation'
 
+  let { form } = $props()
   let capKey = $state()
   let capKeyInput = $state()
   let newCapKey = $state()
@@ -19,7 +20,17 @@
   const enhanceForm = () => {
     return async ({ result, update }) => {
       await update()
-      newCapKey = result.data.capKey
+
+      if (result.status === 200) {
+        switch (result.data.endpoint) {
+          case 'createCapKey': {
+            newCapKey = result.data.capKey
+          }
+          case 'listDirectories': {
+            capKey = result.data.capKey
+          }
+        }
+      }
     }
   }
 
@@ -29,6 +40,12 @@
       alert('Please confirm you copied and saved the cap key.')
     }
   })
+
+  $effect(() => {
+    if (form?.error) console.log({ error: form.error })
+  })
+
+  $effect(() => console.log({ form }))
 </script>
 
 <svelte:head>
@@ -37,19 +54,20 @@
 </svelte:head>
 <h1>Dashboard</h1>
 
-{#if !capKey && !newCapKey}
+{#if !form?.capKey && !newCapKey}
   <div class='cap-key-div add'>
-    <div class='cap-key'>
+    <form action='?/listDirectories' class='cap-key' method='post' enctype='form-data' use:enhance={enhanceForm}>
       <label for='capKeyInput'>Cap key:</label>
-      <input type='text' name='capKeyInput' bind:value={capKeyInput} />
-      <button onclick={submitKey}>Submit</button>
-    </div>
+      <input type='text' name='capKeyInput' />
+
+      <button type='submit'>Submit</button>
+    </form>
 
     <form action='?/createCapKey' method='post' enctype='form-data' use:enhance={enhanceForm}>
       <button type='submit'>New cap key</button>
     </form>
   </div>
-{:else if !capKey && newCapKey}
+{:else if !form?.capKey && newCapKey}
   <div class='cap-key-div get'>
     <label for='newCapKey'><h2>New cap key</h2></label>
     <input type='text' id='newCapKey' name='newCapKey' value={newCapKey} />
@@ -73,7 +91,7 @@
   </div>
 {:else}
   <h2>File tree</h2>
-  <p>{capKey}</p>
+  <p>{form.capKey}</p>
 {/if}
 
 <style>
