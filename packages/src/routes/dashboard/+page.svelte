@@ -1,12 +1,14 @@
 <script>
   import { enhance } from '$app/forms'
   import { beforeNavigate } from '$app/navigation'
+  import Modal from '$lib/components/modal.svelte'
 
   let { form } = $props()
   let capKey = $state()
   let capKeyInput = $state()
   let newCapKey = $state()
   let checked = $state(false)
+  let showModal = $state(false)
 
   const submitKey = () => {
     capKey = capKeyInput
@@ -42,7 +44,7 @@
   })
 
   $effect(() => {
-    if (form?.error) console.log({ error: form.error })
+    if (form?.capKey) capKey = form.capKey
   })
 
   $effect(() => console.log({ form }))
@@ -54,9 +56,11 @@
 </svelte:head>
 <h1>Dashboard</h1>
 
-{#if !form?.capKey && !newCapKey}
+<button onclick={() => showModal = true}>Modal</button>
+
+{#if !capKey && !newCapKey}
   <div class='cap-key-div add'>
-    <form action='?/listDirectories' class='cap-key' method='post' enctype='form-data' use:enhance={enhanceForm}>
+    <form action='?/listDirectories' method='post' enctype='form-data' use:enhance={enhanceForm}>
       <label for='capKeyInput'>Cap key:</label>
       <input type='text' name='capKeyInput' />
 
@@ -67,7 +71,7 @@
       <button type='submit'>New cap key</button>
     </form>
   </div>
-{:else if !form?.capKey && newCapKey}
+{:else if !capKey && newCapKey}
   <div class='cap-key-div get'>
     <label for='newCapKey'><h2>New cap key</h2></label>
     <input type='text' id='newCapKey' name='newCapKey' value={newCapKey} />
@@ -91,19 +95,44 @@
   </div>
 {:else}
   <h2>File tree</h2>
-  <p>{form.capKey}</p>
+
+  <ul>
+    {#each form?.list as item}
+      {#if item === 'dirnode'}
+        <li>/</li>
+      {:else}
+        <li>{Object.keys(item.children)[0]}</li>
+      {/if}
+    {/each}
+  </ul>
+
+  <button>Add folder</button>
+  <button>Upload file</button>
+  <button onclick={() => capKey = undefined}>Change cap key</button>
 {/if}
 
+<Modal {showModal} escape={() => showModal = false}>
+  <h1>Modal</h1>
+  <button onclick={() => showModal = false}>Ok</button>
+</Modal>
+
 <style>
-  form, .cap-key {
+  form {
     display: flex;
+    flex-direction: column;
+    text-align: left;
   }
 
   form button {
-    margin: 0 0 0 auto;
+    margin: 0 0 1em auto;
+  }
+
+  form input {
+    margin: 1em 0;
   }
 
   .cap-key {
+    display: flex;
     margin: auto 0 2em 0;
   }
 
@@ -122,7 +151,7 @@
   }
 
   .cap-key-div {
-    max-width: 40em;
+    max-width: 45em;
     margin: 0 auto;
   }
 
@@ -150,5 +179,13 @@
     background-color: var(--shade-color);
     padding: 0.5em;
     margin: 2em auto;
+  }
+
+  ul {
+    list-style: none;
+    text-align: left;
+    background: var(--shade-color);
+    padding: 1em;
+    border: solid thin var(--border-color);
   }
 </style>

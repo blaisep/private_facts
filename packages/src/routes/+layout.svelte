@@ -10,10 +10,11 @@
 
 <style>
   :root {
-    --border-color: #3b3b3b;
+    --border-color: #aaa;
+    --button-color: #f6f6f6;
     --font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
     --navbar-height: 3em;
-    --shade-color: #ccc;
+    --shade-color: #eee;
     --theme-background: white;
     --theme-color: #444;
   }
@@ -39,11 +40,13 @@
   :global(button) {
     margin: 1em;
     width: 10em;
-    height: 3em;
+    height: 2.5em;
     font-family: var(--font-family-text);
-    font-weight: 400;
+    font-weight: 200;
     font-size: 16px;
-    color: var(--button-color);
+    background: var(--button-color);
+    border: solid thin;
+    border-radius: 5px;
   }
 
   :global(button:hover) {
