@@ -14,6 +14,7 @@
     --button-color: #f6f6f6;
     --font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
     --navbar-height: 3em;
+    --shade-background: rgba(0, 0, 0, 0.2);
     --shade-color: #eee;
     --theme-background: white;
     --theme-color: #444;

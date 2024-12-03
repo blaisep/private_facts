@@ -7,6 +7,8 @@
   let capKey = $state()
   let capKeyInput = $state()
   let newCapKey = $state()
+  let modalTitle = $state()
+  let modalText = $state()
   let checked = $state(false)
   let showModal = $state(false)
 
@@ -39,7 +41,9 @@
   beforeNavigate(({ cancel }) => {
     if (newCapKey && !capKey) {
       cancel()
-      alert('Please confirm you copied and saved the cap key.')
+      modalTitle = 'Warning'
+      modalText = 'Please confirm you copied and saved the cap key.'
+      showModal = true
     }
   })
 
@@ -48,6 +52,14 @@
   })
 
   $effect(() => console.log({ form }))
+
+  $effect(() => {
+    if (form?.error) {
+      modalTitle = 'Error'
+      modalText = form.error
+      showModal = true
+    }
+  })
 </script>
 
 <svelte:head>
@@ -55,8 +67,6 @@
   <meta name='description' content='Private Facts dashboard.'>
 </svelte:head>
 <h1>Dashboard</h1>
-
-<button onclick={() => showModal = true}>Modal</button>
 
 {#if !capKey && !newCapKey}
   <div class='cap-key-div add'>
@@ -112,7 +122,8 @@
 {/if}
 
 <Modal {showModal} escape={() => showModal = false}>
-  <h1>Modal</h1>
+  <h2>{modalTitle}</h2>
+  <p>{modalText}</p>
   <button onclick={() => showModal = false}>Ok</button>
 </Modal>
 
@@ -129,25 +140,6 @@
 
   form input {
     margin: 1em 0;
-  }
-
-  .cap-key {
-    display: flex;
-    margin: auto 0 2em 0;
-  }
-
-  .cap-key label {
-    min-width: 5em;
-    margin: auto 0;
-  }
-
-  .cap-key input {
-    width: 100%;
-  }
-
-  .cap-key button {
-    min-width: 10em;
-    margin: auto 0 auto 1em;
   }
 
   .cap-key-div {

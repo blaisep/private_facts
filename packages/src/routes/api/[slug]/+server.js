@@ -13,9 +13,9 @@ export const POST = async ({ params, request }) => {
         const capKey = await response.json()
 
         return json({ success: true, capKey })
-      } catch (err) {
-        console.log({ err })
-        return json({ success: false, code: 500, error: err })
+      } catch (error) {
+        console.log({ error })
+        return json({ success: false, code: 500, error })
       }
     }
 
@@ -25,12 +25,11 @@ export const POST = async ({ params, request }) => {
         const url = `${env.TAHOE_API}/uri/${encodedCapKey}?t=json`
         const response = await fetch(url, { method: 'GET' })
         const list = await response.json()
-        console.log({ url, list })
 
         return json({ success: true, list })
-      } catch (err) {
-        console.log({ err })
-        return json({ success: false, code: 500, error: err })
+      } catch (error) {
+        console.log({ error })
+        return json({ success: false, code: 500, error, message: error.cause.message })
       }
     }
 

@@ -25,7 +25,14 @@ export const actions = {
         body: JSON.stringify({ capKey: encoded })
       })
       const jsonResponse = await response.json()
-      if (!jsonResponse.success) throw new Error(jsonResponse.error)
+
+      if (!jsonResponse.success) {
+        if (jsonResponse.message.includes('ECONNREFUSED')) {
+          return { error: 'Tahoe server may be offline.' }
+        } else {
+          throw new Error(jsonResponse.error)
+        }
+      }
 
       return { endpoint: 'listDirectories', list: jsonResponse.list, capKey }
     } catch (err) {
