@@ -18,57 +18,13 @@ The project intends to be a demonstration of how to use [Tahoe-lafs]()  "provide
 git clone https://github.com/blaisep/private_facts.git && cd private_facts
 ```
 
-### Install from (Docker) Image
-
-TBA
-
-### 
-
-```bash
-a bash code block
-```
-
-### SvelteKit
-
-Requirements
-
-- NodeJs > 20.0
-- Pnpm
-
-Install dependencies and run:
-
-```sh
-cd packages
-pnpm install
-pnpm dev --open
-```
-
-## Usage
-
-### Run using a (OCI) container
-
-```python
-A Python code block
-```
-
-## Feedback
-
-The project issue tracker is getting migrated. For now, feel free to open an issue and let us know how how to improve.
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-
-### Install dependencies
+Install dependencies.
 
 ```sh
 uv venv
 source .venv/bin/activate
 uv pip install -r pyproject.toml
 ```
-
-### Set up developer environment
 
 Setup a grid:
 
@@ -121,6 +77,48 @@ Client:
 .venv/bin/tahoe create-client --introducer $(cat introducer/private/introducer.furl) --nickname webapp --webport 6301 --shares-total=3 --shares-needed=2 --shares-happy=3 ./webapp
 .venv/bin/tahoe -d webapp run
 ```
+
+### Install from (Docker) Image
+
+TBA
+
+### 
+
+```bash
+a bash code block
+```
+
+### SvelteKit
+
+Requirements
+
+- NodeJs > 20.0
+- Pnpm
+
+Install dependencies and run:
+
+```sh
+cd packages
+pnpm install
+pnpm dev --open
+```
+
+## Usage
+
+### Run using a (OCI) container
+
+```python
+A Python code block
+```
+
+## Feedback
+
+The project issue tracker is getting migrated. For now, feel free to open an issue and let us know how how to improve.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
 
 ### Getting ready for your first pull request
 
