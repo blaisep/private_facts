@@ -1,16 +1,25 @@
 <script>
   import { enhance } from '$app/forms'
   import { beforeNavigate } from '$app/navigation'
+  import Loading from '$lib/components/loading.svelte'
   import Modal from '$lib/components/modal.svelte'
+  import { fade } from 'svelte/transition'
 
   let { form } = $props()
   let capKey = $state()
   let capKeyInput = $state()
-  let newCapKey = $state()
+  let list = $state()
+  let listForm = $state()
   let modalTitle = $state()
   let modalText = $state()
+  let newCapKey = $state()
   let checked = $state(false)
+  let loading = $state(false)
   let showModal = $state(false)
+  let showDelModal = $state(false)
+  let showUploadModal = $state(false)
+  let showAddFolderModal = $state(false)
+
 
   const submitKey = () => {
     capKey = capKeyInput
@@ -22,16 +31,33 @@
   }
 
   const enhanceForm = () => {
+    showDelModal = false
+    showUploadModal = false
+    showAddFolderModal = false
+    loading = true
+
     return async ({ result, update }) => {
       await update()
+      loading = false
 
       if (result.status === 200) {
         switch (result.data.endpoint) {
           case 'createCapKey': {
             newCapKey = result.data.capKey
+            break
           }
           case 'listDirectories': {
             capKey = result.data.capKey
+            list = result.data.list
+            break
+          }
+          case 'uploadFile': {
+            listForm.requestSubmit()
+            break
+          }
+          case 'deletePath': {
+            listForm.requestsubmit()
+            break
           }
         }
       }
@@ -47,12 +73,13 @@
     }
   })
 
+  // Store cap key in a variable for use while current page
+  // is on screen
   $effect(() => {
     if (form?.capKey) capKey = form.capKey
   })
 
-  $effect(() => console.log({ form }))
-
+  // Show errors
   $effect(() => {
     if (form?.error) {
       modalTitle = 'Error'
@@ -66,13 +93,20 @@
   <title>Private Facts dashboard</title>
   <meta name='description' content='Private Facts dashboard.'>
 </svelte:head>
+
+{#if loading}
+  <div class='loader' transition:fade|local>
+    <Loading />
+  </div>
+{/if}
+
 <h1>Dashboard</h1>
 
 {#if !capKey && !newCapKey}
   <div class='cap-key-div add'>
-    <form action='?/listDirectories' method='post' enctype='form-data' use:enhance={enhanceForm}>
+    <form action='?/listDirectories' method='post' enctype='form-data' use:enhance={enhanceForm} bind:this={listForm}>
       <label for='capKeyInput'>Cap key:</label>
-      <input type='text' name='capKeyInput' />
+      <input type='text' name='capKeyInput' value={capKey} />
 
       <button type='submit'>Submit</button>
     </form>
@@ -106,20 +140,21 @@
 {:else}
   <h2>File tree</h2>
 
-  <ul>
-    {#each form?.list as item}
-      {#if item === 'dirnode'}
-        <li>/</li>
-      {:else}
-        <li>{Object.keys(item.children)[0]}</li>
-      {/if}
-    {/each}
-  </ul>
+  {#if list}
+    <ul>
+      {#each Object.keys(list[1].children) as item}
+        <li>{item}</li>
+      {/each}
+    </ul>
+  {/if}
 
-  <button>Add folder</button>
-  <button>Upload file</button>
+  <button onclick={() => showAddFolderModal = true}>Add folder</button>
+  <button onclick={() => showUploadModal = true}>Upload file</button>
+  <button onclick={() => showDelModal = true}>Unlink file / folder</button>
   <button onclick={() => capKey = undefined}>Change cap key</button>
 {/if}
+
+<!-- Modals -->
 
 <Modal {showModal} escape={() => showModal = false}>
   <h2>{modalTitle}</h2>
@@ -127,14 +162,74 @@
   <button onclick={() => showModal = false}>Ok</button>
 </Modal>
 
-<style>
-  form {
+<Modal showModal={showDelModal} escape={() => showDelModal = false}>
+  <h2>Unlink</h2>
+  <p>Specify path of file or folder to unlink.</p>
+  <p>Ex.: /Documents/File-1.txt</p>
+
+  <form action='?/deletePath' method='post' enctype='form-data' use:enhance={enhanceForm}>
+    <input type='hidden' name='capKey' value={capKey} />
+
+    <label for='path'>Path:</label>
+    <input type='text' name='path' class='path-input' />
+
+    <div class='form-actions'>
+      <button onclick={() => showDelModal = false}>Cancel</button>
+      <button type='submit'>Confirm</button>
+    </div>
+  </form>
+</Modal>
+
+<Modal showModal={showUploadModal} escape={() => showUploadModal = false}>
+  <h2>Upload file</h2>
+
+  <form action='?/uploadFile' method='post' enctype='multipart/form-data' use:enhance={enhanceForm}>
+    <input type='hidden' name='capKey' value={capKey} />
+
+    <div class='file-input'>
+      <label for='file'>File:</label>
+      <input type='file' name='file' placeholder='file' required />
+    </div>
+
+    <label for='path'>Path:</label>
+    <input type='text' name='path' class='path-input' />
+
+    <div class='form-actions'>
+      <button onclick={() => showUploadModal = false}>Cancel</button>
+      <button type='submit'>Upload</button>
+    </div>
+  </form>
+</Modal>
+
+<Modal showModal={showAddFolderModal} escape={() => showAddFolderModal = false}>
+  <h2>Add folder</h2>
+
+  <form action='?/createDirectory' method='post' enctype='form-data' use:enhance={enhanceForm}>
+    <input type='hidden' name='capKey' value={capKey} />
+
+    <div class='new-folder-input'>
+      <label for='dirName'>New folder name:</label>
+      <input type='text' name='dirName' />
+
+      <label for='path'>Path:</label>
+      <input type='text' name='path' />
+    </div>
+
+    <div class='form-actions'>
+      <button onclick={() => showAddFolderModal = false}>Cancel</button>
+      <button type='submit'>Confirm</button>
+    </div>
+  </form>
+</Modal>
+
+<style> 
+  .cap-key-div form {
     display: flex;
     flex-direction: column;
     text-align: left;
   }
 
-  form button {
+  .cap-key-div form button {
     margin: 0 0 1em auto;
   }
 
@@ -179,5 +274,20 @@
     background: var(--shade-color);
     padding: 1em;
     border: solid thin var(--border-color);
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .path-input {
+    width: 30em;
+  }
+
+  .new-folder-input {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
   }
 </style>

@@ -1,15 +1,15 @@
 import { fail } from '@sveltejs/kit'
+import { createAlias, createDirectory, listDirectories, unlink, uploadFile } from '$lib/utils/tahoe'
 
 export const actions = {
   createCapKey: async ({ request, fetch }) => {
     try {
-      const response = await fetch('/api/createAlias', { method: 'POST' })
-      const jsonResponse = await response.json()
+      const { capKey } = await createAlias()
 
-      return { endpoint: 'createCapKey', capKey: jsonResponse.capKey }
-    } catch (err) {
-      console.log({ err })
-      return fail(500, { endpoint: 'createCapKey', error: err })
+      return { endpoint: 'createCapKey', capKey }
+    } catch (error) {
+      console.log({ error })
+      return fail(500, { endpoint: 'createCapKey', error })
     }
   },
 
@@ -19,25 +19,84 @@ export const actions = {
     const encoded = encodeURIComponent(capKey)
 
     try {
-      const response = await fetch('/api/listDirectories', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ capKey: encoded })
-      })
-      const jsonResponse = await response.json()
+      const { list } = await listDirectories(capKey)
 
-      if (!jsonResponse.success) {
-        if (jsonResponse.message.includes('ECONNREFUSED')) {
-          return { error: 'Tahoe server may be offline.' }
-        } else {
-          throw new Error(jsonResponse.error)
-        }
+      return { endpoint: 'listDirectories', list, capKey }
+    } catch (error) {
+      if (error.cause.message.includes('ECONNREFUSED')) {
+        return { error: 'Tahoe server may be offline.' }
       }
 
-      return { endpoint: 'listDirectories', list: jsonResponse.list, capKey }
-    } catch (err) {
-      console.log({ err })
-      return fail(500, { endpoint: 'listDirectories', error: err })
+      console.log({ error })
+      return fail(500, { endpoint: 'listDirectories', error })
+    }
+  },
+
+  createDirectory: async ({ request, fetch }) => {
+    const formData = await request.formData()
+    const capKey = formData.get('capKey')
+    const encoded = encodeURIComponent(capKey)
+    const dirName= formData.get('dirName')
+    let path = formData.get('path')
+
+    if (path.length === 0) path = '/'
+    if (path.slice(0, 1) !== '/') path = '/' + path
+    if (path.slice(-1) !== '/') path = path + '/'
+
+    path = encoded + encodeURI(path)
+
+    try {
+      const { cap } = await createDirectory(path, dirName)
+
+      return { success: true, endpoint: 'uploadFile' }
+    } catch (error) {
+      console.log({ error })
+      return fail(500, { endpoint: 'uploadFile', error})
+    }
+  },
+
+  uploadFile: async ({ request, fetch }) => {
+    const formData = await request.formData()
+    const capKey = formData.get('capKey')
+    const encoded = encodeURIComponent(capKey)
+    const file = formData.get('file')
+    let path = formData.get('path')
+
+    if (path.length === 0) path = '/'
+    if (path.slice(0, 1) !== '/') path = '/' + path
+    if (path.slice(-1) !== '/') path = path + '/'
+
+    path = encoded + encodeURI(path + file.name)
+
+    try {
+      await uploadFile(path, file.name, file)
+
+      return { success: true, endpoint: 'uploadFile' }
+    } catch (error) {
+      console.log({ error })
+      return fail(500, { endpoint: 'uploadFile', error})
+    }
+  },
+
+  deletePath: async ({ request, fetch }) => {
+    const formData = await request.formData()
+    const capKey = formData.get('capKey')
+    const encoded = encodeURIComponent(capKey)
+    const partialPath = formData.get('path')
+    const slash = partialPath.slice(0, 1) === '/' ? '' : '/'
+    const path = encoded + slash + partialPath
+
+    if (partialPath.length === 0) {
+      return { success: false, endpoint: 'deletePath', error: 'Path cannot be empty.'}
+    }
+
+    try {
+      await unlink(path)
+
+      return { success: true, endpoint: 'deletePath' }
+    } catch (error) {
+      console.log({ error })
+      return json({ success: false, code: 500, error })
     }
   }
 }

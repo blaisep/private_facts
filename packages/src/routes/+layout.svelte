@@ -16,6 +16,7 @@
     --navbar-height: 3em;
     --shade-background: rgba(0, 0, 0, 0.2);
     --shade-color: #eee;
+    --shade-loading: rgba(0, 0, 0, 0.3);
     --theme-background: white;
     --theme-color: #444;
   }
