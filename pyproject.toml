@@ -1,7 +1,11 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "private-facts"
 version = "0.1.0"
-description = "Add your description here"
+description = "Tahoe-lafs example app"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -10,3 +14,12 @@ dependencies = [
     "tahoe-lafs>=1.19.0",
     "wheel>=0.45.0",
 ]
+
+[tool.hatch.build]
+exclude = [
+  "packages",
+  "dist",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
