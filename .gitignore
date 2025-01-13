@@ -1,5 +1,7 @@
-node_modules
+private_facts/test/__pycache__/
 
+node_modules
+.idea/
 # Output
 .output
 .vercel
