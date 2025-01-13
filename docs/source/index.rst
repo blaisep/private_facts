@@ -2,7 +2,14 @@
 Private Facts
 ==============
 
+.. toctree::
+    :maxdepth: 2
 
+    howto-setup
+    howto-cli
+    faq
+    decisions
+    cases
 
 
 Domain Model
