@@ -97,10 +97,9 @@ kill -9 <PID>
 
 Please make sure to update tests as appropriate.
 
-We Manage the project with [uv](https://docs.astral.sh/uv/), you don't have to.
+We manage the project with [uv](https://docs.astral.sh/uv/), you don't have to.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
-
+[GNU General Public License v3](https://choosealicense.com/licenses/gpl-3.0/)
 [//]: # ( This file was inspired by https://www.makeareadme.com/ )
