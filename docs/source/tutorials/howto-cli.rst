@@ -11,18 +11,24 @@ Use the CLI to move some files in and out of Tahoe-LAFS
 Upload a simple text file
 --------------------------
 
-.. code-block:: bash
+.. tab:: CLI
 
-    $ echo "Hello Tahoe" > hello.txt
-    $ tahoe --node-directory=tahoe-server/client0 put ./hello.txt
+    .. code-block:: bash
 
-.. code-block:: python
+        $ echo "Hello Tahoe" > hello.txt
+        $ tahoe --node-directory=tahoe-server/client0 put ./hello.txt
 
-    Python example
+.. tab:: Python
 
-.. code-block:: curl
+    .. code-block:: python
 
-    curl code
+        Python example
+
+.. tab:: Curl
+
+    .. code-block::
+
+        curl code
 
 
 Then save the result (eg. ``URI:LIT:jbswy3dpeblw64tmmqfa`` )
