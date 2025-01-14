@@ -43,17 +43,15 @@ def upload_string():
     resp = http.request(
     "PUT",
     BASE_URL,
-    "Hello, world!"
+    TEST_STRING
 )
-    print(resp.status)
-    print(resp.data)
 
     return resp
 
 
-def main(test_string=TEST_STRING):
-    print(f"The contents of the test string are: {test_string}")
+def main():
+    get_string()
 
 
 if __name__ == "__main__":
-    print(get_string())
+    main()
