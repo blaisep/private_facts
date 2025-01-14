@@ -1,5 +1,4 @@
-private_facts/test/__pycache__/
-
+*.pyc
 node_modules
 .idea/
 # Output
