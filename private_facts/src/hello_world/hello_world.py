@@ -25,13 +25,12 @@ http = urllib3.PoolManager()
 
 def get_string(uri=""):
     """
-    For now, set uri to the fURL of some file you've uploaded 
+    Retrieve the contents of the string uploaded by upload_string
     """
     # Two sample URIs:
     # uri = "URI:LIT:k5ugc5dfozsxeiijbi"
     # uri = "URI:CHK:k5a6fm7527ayjcrhblng3k6lpq:7vau4zhhuun52uibdrs6bfqhvcjwcnldt7rwm3jds3v2zthtlnhq:1:1:152225"
     uri = upload_string().data.decode("utf-8")
-    print(uri)
     resp = http.request(
     "GET",
     BASE_URL + uri
@@ -40,6 +39,9 @@ def get_string(uri=""):
 
 
 def upload_string():
+    """
+    Upload the contents of the test string via the Tahoe client.
+    """
     resp = http.request(
     "PUT",
     BASE_URL,
@@ -50,7 +52,7 @@ def upload_string():
 
 
 def main():
-    get_string()
+    print(get_string())
 
 
 if __name__ == "__main__":
