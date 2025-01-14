@@ -10,9 +10,10 @@ To start from the simplest possible step and incrementally build to a web applic
 * Upload and retrieve multiple files
 * Sanitize the Tahoe fURLs and discuss security concerns
 
-.. note:: These excercises will not emphasize using Tahoe-lafs to mimic a file system directory struture.
+.. note:: These exercises will not emphasize using Tahoe-lafs to mimic a file system directory struture.
 
 .. toctree::
+    :titlesonly:
     :glob:
 
     *

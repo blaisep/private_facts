@@ -148,8 +148,7 @@ or use ``curl -k  http://localhost:3456``
 The landing page should show 1 of 1 storage servers connected, 0 introducers and 0 helpers.
 This verifies that the client can run Tahoe requests and that the storage node successfully responds.
 
-.. admonition:: Congratulations on completing Step 2 !
-    :class: tip
+.. note:: Congratulations on completing Step 2 !
 
 Connect using the ``tahoe`` CLI
 ===============================

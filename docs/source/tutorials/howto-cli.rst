@@ -8,21 +8,35 @@ Ensure your client is working
 
 Use the CLI to move some files in and out of Tahoe-LAFS
 
-Upload a simple text file
---------------------------
+Upload a simple string
+----------------------
+
+Begin by uploading a string using either the CLI, a python script, or a ``curl`` command.
 
 .. tab:: CLI
 
     .. code-block:: bash
 
-        $ echo "Hello Tahoe" > hello.txt
-        $ tahoe --node-directory=tahoe-server/client0 put ./hello.txt
+        $ python3 private_facts/src/hello_world/hello_world.py
 
 .. tab:: Python
 
     .. code-block:: python
 
-        Python example
+        BASE_URL=
+        http = urllib3.PoolManager()
+        def upload_string():
+            """
+            Upload the contents of the test string via the Tahoe client and return fURL.
+            """
+            resp = http.request(
+            "PUT",
+            "http://127.0.0.1:3456/uri/",
+            "Hello, world! You now have data in Tahoe-lafs."
+        )
+            furl = resp.data.decode("utf-8")
+            print(furl)
+            return furl
 
 .. tab:: Curl
 
@@ -31,17 +45,33 @@ Upload a simple text file
         curl code
 
 
-Then save the result (eg. ``URI:LIT:jbswy3dpeblw64tmmqfa`` )
+Then save the result (eg. ``URI:LIT:jbswy3dpeblw64tmmqfa`` ) this will serve to refer to the data later.
 
+.. note:: Since put is idempotent.
+
+
+Upload a simple file:
+
+        $ echo "Hello World" > hello.txt
+        $ tahoe --node-directory=tahoe-server/client0 put ./hello.txt
+
+Note the result ``URI:LIT: ...``
+(let's use ``URI:LIT:jbswy3dpeblw64tmmqfa`` just as an example.)
 
 Download the contents of the text file
 --------------------------------------
 
+Now we can download the CONTENTS of the file
 
 .. code-block::
 
     $ tahoe --node-directory=tahoe-server/client0 get URI:LIT:jbswy3dpeblw64tmmqfa``.
 
+We can redirect the contents of the file using a redirection:
+
+.. code-block::
+
+        $ tahoe --node-directory=tahoe-server/client0 get URI:LIT:jbswy3dpeblw64tmmqfa`` > hello_back.txt
 
 
 Upload an image file
@@ -141,7 +171,7 @@ Store the URL with your code to persist across sessions
 
 
 Advanced persistence mechanisms
-------------------------------
+-------------------------------
 
 Options for production use (eg. "repository pattern"):
 *   High exposure / less secure: sqlite https://sqlite-utils.datasette.io/en/stable/python-api.html
