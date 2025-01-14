@@ -34,9 +34,9 @@ def upload_string():
     BASE_URL,
     TEST_STRING
 )
+
     furl = resp.data.decode("utf-8")
     print(furl)
-
     return furl
 
 
