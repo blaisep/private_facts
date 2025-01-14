@@ -24,23 +24,10 @@ BASE_URL="http://127.0.0.1:3456/uri/"
 
 http = urllib3.PoolManager()
 
-def get_string(uri=""):
-    """
-    Retrieve and return the contents of the string uploaded by upload_string.
-    """
-    uri = upload_string().data.decode("utf-8")
-
-    resp = http.request(
-    "GET",
-    BASE_URL + uri
-)
-
-    return resp.data.decode("utf-8")
-
 
 def upload_string():
     """
-    Upload the contents of the test string via the Tahoe client and return the response.
+    Upload the contents of the test string via the Tahoe client and return fURL.
     """
     resp = http.request(
     "PUT",
@@ -48,11 +35,28 @@ def upload_string():
     TEST_STRING
 )
 
-    return resp
+    furl = resp.data.decode("utf-8")
+    print(furl)
+    return furl
 
+
+def get_string(uri=""):
+    """
+    Retrieve and return the contents of the string uploaded by upload_string.
+    """
+    uri = upload_string()
+
+    resp = http.request(
+    "GET",
+    BASE_URL + uri
+)
+
+    retrieved_str = resp.data.decode("utf-8")
+    print(retrieved_str)
+    return retrieved_str
 
 def main():
-    print(get_string())
+    get_string()
 
 
 if __name__ == "__main__":
