@@ -19,30 +19,40 @@
 import urllib3
 
 TEST_STRING = "Hello, world!"
+# By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
 
 http = urllib3.PoolManager()
 
-def get_string():
+def get_string(uri=""):
     """
-    For now, set uri to the fURL of some file you've uploaded 
+    Retrieve and return the contents of the string uploaded by upload_string.
     """
-    # Two sample URIs:
-    # uri = "URI:LIT:k5ugc5dfozsxeiijbi"
-    # uri = "URI:CHK:k5a6fm7527ayjcrhblng3k6lpq:7vau4zhhuun52uibdrs6bfqhvcjwcnldt7rwm3jds3v2zthtlnhq:1:1:152225"
+    uri = upload_string().data.decode("utf-8")
+
     resp = http.request(
     "GET",
     BASE_URL + uri
 )
+
+    return resp.data.decode("utf-8")
+
+
+def upload_string():
+    """
+    Upload the contents of the test string via the Tahoe client and return the response.
+    """
+    resp = http.request(
+    "PUT",
+    BASE_URL,
+    TEST_STRING
+)
+
     return resp
 
 
-def upload_string(fURL="http://127.0.0.1:3456/uri/URI%3ADIR2%3Adjrdkfawoqihigoett4g6auz6a%3Ajx5mplfpwexnoqff7y5e4zjus4lidm76dcuarpct7cckorh2dpgq/"):
-    return fURL
-
-
-def main(test_string=TEST_STRING):
-    print(f"The contents of the test string are: {test_string}")
+def main():
+    print(get_string())
 
 
 if __name__ == "__main__":
