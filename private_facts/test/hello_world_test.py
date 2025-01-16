@@ -3,19 +3,25 @@ import pytest
 import subprocess
 from hello_world import upload_string
 
+# The key is the data to be uploaded; the value is the URI Tahoe returns.
 fake_data = {
     'test_string': 'test_string_uri'
 }
 
 class FakeTahoe:
-    def __init__(self, stored_data={}):
-        self.stored_data = stored_data
+    """
+    An object which mocks a Tahoe client.
+    """
+    def __init__(self, storage={}):
+        self.storage = storage
 
-    def upload(self, data_key):
-        uri = fake_data.get(data_key)
-        self.stored_data[uri] = data_key
+    def upload_data(self, data):
+        uri = fake_data.get(data) # Get the URI from the fake_data dict
+        self.storage[uri] = datadata # Store the URI as key and the data as value for later retrieval
         return uri
 
+    def retrieve_data(self, uri):
+        return self.stored_data.get(uri)
 
 
 @pytest.mark.skip(reason="Code has changed.")
@@ -35,6 +41,13 @@ def test_upload_string_deprecated():
 
 def test_upload_string():
     fake_tahoe = FakeTahoe()
-    result = fake_tahoe.upload('test_string')
+    result = fake_tahoe.upload_data('test_string')
     expected = fake_data.get('test_string')
+    assert result == expected
+
+def test_upload_and_retrieve_string():
+    fake_tahoe = FakeTahoe()
+    uri = fake_tahoe.upload_data('test_string')
+    result = fake_tahoe.retrieve_data(uri)
+    expected = 'test_string'
     assert result == expected
