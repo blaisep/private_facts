@@ -4,12 +4,18 @@ import subprocess
 from hello_world import upload_string
 
 fake_data = {
-    'string': 'URI:CHK:3w4jfu3rtqobwjj4lhjbuclnu4:xqpceo5hvyjyb6mywufynhuhovlyhew2p7iswf77c5txlbpnljxa:1:1:7'
+    'test_string': 'test_string_uri'
 }
 
-class FakeTahoe():
+class FakeTahoe:
+    def __init__(self, stored_data={}):
+        self.stored_data = stored_data
+
     def upload(self, data_key):
-        return fake_data.get(data_key)
+        uri = fake_data.get(data_key)
+        self.stored_data[uri] = data_key
+        return uri
+
 
 
 @pytest.mark.skip(reason="Code has changed.")
@@ -29,6 +35,6 @@ def test_upload_string_deprecated():
 
 def test_upload_string():
     fake_tahoe = FakeTahoe()
-    result = fake_tahoe.upload('string')
-    expected = fake_data.get('string')
+    result = fake_tahoe.upload('test_string')
+    expected = fake_data.get('test_string')
     assert result == expected
