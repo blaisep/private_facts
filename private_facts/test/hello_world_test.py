@@ -17,7 +17,7 @@ class FakeTahoe:
 
     def upload_data(self, data):
         uri = fake_data.get(data) # Get the URI from the fake_data dict
-        self.storage[uri] = datadata # Store the URI as key and the data as value for later retrieval
+        self.storage[uri] = data # Store the URI as key and the data as value for later retrieval
         return uri
 
     def retrieve_data(self, uri):
@@ -39,13 +39,13 @@ def test_upload_string_deprecated():
     result = upload_string()
     assert result == expected
 
-def test_upload_string():
+def test_fake_tahoe_upload_string():
     fake_tahoe = FakeTahoe()
     result = fake_tahoe.upload_data('test_string')
     expected = fake_data.get('test_string')
     assert result == expected
 
-def test_upload_and_retrieve_string():
+def test_fake_tahoe_upload_and_retrieve_string():
     fake_tahoe = FakeTahoe()
     uri = fake_tahoe.upload_data('test_string')
     result = fake_tahoe.retrieve_data(uri)
