@@ -54,25 +54,21 @@ def test_fake_tahoe_upload_and_retrieve_string():
     
     assert result == expected
 
-def test_upload_string():
+def test_upload_string(capsys):
     tahoe_client = FakeTahoe()
     result = upload_string(tahoe_client, 'test_string')
     expected = 'test_string_uri'
-    
-    assert result == expected
-
-def test_upload_string_print(capsys):
-    tahoe_client = FakeTahoe()
-    upload_string(tahoe_client, 'test_string')
     output = capsys.readouterr().out.rstrip()
     expected_output = fake_data.get('test_string')
 
+    assert result == expected
     assert output == expected_output
 
-def test_retrieve_string():
+def test_retrieve_string(capsys):
     tahoe_client = FakeTahoe()
     uri = upload_string(tahoe_client, 'test_string')
     result = tahoe_client.retrieve_data(uri)
     expected = 'test_string'
+    output = capsys.readouterr().out.rstrip()
 
     assert result == expected
