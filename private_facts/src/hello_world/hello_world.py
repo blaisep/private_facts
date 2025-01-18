@@ -18,7 +18,7 @@
 """
 import urllib3
 
-TEST_STRING = "Hello, world! You now have data in Tahoe-lafs."
+TEST_STRING = "Hello, world! You now have data in Tahoe-lafs, but only in your client, not yet on any grid.."
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
 
