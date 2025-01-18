@@ -1,7 +1,7 @@
 
 import pytest
 import subprocess
-from hello_world import upload_string
+from hello_world import upload_string, get_string
 
 # The key is the data to be uploaded; the value is the URI Tahoe returns.
 fake_data = {
@@ -21,7 +21,7 @@ class FakeTahoe:
         return uri
 
     def retrieve_data(self, uri):
-        return self.stored_data.get(uri)
+        return self.storage.get(uri)
 
 
 @pytest.mark.skip(reason="Code has changed.")
@@ -50,4 +50,10 @@ def test_fake_tahoe_upload_and_retrieve_string():
     uri = fake_tahoe.upload_data('test_string')
     result = fake_tahoe.retrieve_data(uri)
     expected = 'test_string'
+    assert result == expected
+
+def test_upload_string():
+    fake_tahoe = FakeTahoe()
+    result = fake_tahoe.upload_data('test_string')
+    expected = fake_data.get('test_string')
     assert result == expected
