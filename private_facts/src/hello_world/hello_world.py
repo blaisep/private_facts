@@ -18,7 +18,8 @@
 """
 import urllib3
 
-# If TEST_STRING is under a certain number of bytes, it will be encoded in the URL.
+# If TEST_STRING is under a certain number of bytes, it will be encoded in the URL
+SHORT_TEST_STRING = "Hello, world!"
 TEST_STRING = "Hello, world! You now have data in Tahoe-lafs, encoded outside of the URL."
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
@@ -26,6 +27,9 @@ BASE_URL="http://127.0.0.1:3456/uri/"
 http = urllib3.PoolManager()
 
 class TahoeClient:
+    """
+    The TahoeClient object makes requests to and returns responses from a locally running Tahoe client.
+    """
     def __init__(self, base_url):
         self.base_url = BASE_URL
 
@@ -50,7 +54,7 @@ tahoe_client = TahoeClient(base_url=BASE_URL)
 
 def upload_string(tahoe_client, data):
     """
-    Upload the contents of the test string via the Tahoe client and return the URI.
+    Upload the contents of the test string via the Tahoe client and return its URI.
     """
     uri = tahoe_client.upload_data(data)
     print(uri)
@@ -69,9 +73,7 @@ def get_string(tahoe_client):
     print(retrieved_string)
     return retrieved_string
 
-def main():
-    get_string(tahoe_client)
 
 
 if __name__ == "__main__":
-    main()
+    get_string(tahoe_client)
