@@ -590,7 +590,6 @@ source = { editable = "." }
 dependencies = [
     { name = "attrs" },
     { name = "cryptography" },
-    { name = "requests" },
     { name = "sphinx" },
     { name = "tahoe-lafs" },
     { name = "wheel" },
@@ -600,7 +599,6 @@ dependencies = [
 requires-dist = [
     { name = "attrs", specifier = "==23.2.0" },
     { name = "cryptography", specifier = "<42" },
-    { name = "requests", specifier = ">=2.32.3" },
     { name = "sphinx", specifier = ">=8.1.3" },
     { name = "tahoe-lafs", specifier = ">=1.19.0" },
     { name = "wheel", specifier = ">=0.45.0" },
