@@ -43,6 +43,7 @@ def test_fake_tahoe_upload_string():
     fake_tahoe = FakeTahoe()
     result = fake_tahoe.upload_data('test_string')
     expected = fake_data.get('test_string')
+    
     assert result == expected
 
 def test_fake_tahoe_upload_and_retrieve_string():
@@ -50,14 +51,20 @@ def test_fake_tahoe_upload_and_retrieve_string():
     uri = fake_tahoe.upload_data('test_string')
     result = fake_tahoe.retrieve_data(uri)
     expected = 'test_string'
+    
     assert result == expected
 
 def test_upload_string():
-    fake_tahoe = FakeTahoe()
-    result = upload_string(fake_tahoe, 'test_string')
+    tahoe_client = FakeTahoe()
+    result = upload_string(tahoe_client, 'test_string')
     expected = 'test_string_uri'
+    
     assert result == expected
 
-def test_upload_and_retrieve_string():
-    fake_tahoe = FakeTahoe()
-    pass
+def test_retrieve_string():
+    tahoe_client = FakeTahoe()
+    uri = upload_string(tahoe_client, 'test_string')
+    result = tahoe_client.retrieve_data(uri)
+    expected = 'test_string'
+
+    assert result == expected
