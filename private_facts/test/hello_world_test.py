@@ -66,9 +66,7 @@ def test_upload_string(capsys):
 
 def test_retrieve_string():
     tahoe_client = FakeTahoe()
-    uri = upload_string(tahoe_client, 'test_string')
-    result = get_string(tahoe_client)
-    breakpoint()
+    result = get_string(tahoe_client, upload_string(tahoe_client, 'test_string'))
 
     expected = 'test_string'
 
