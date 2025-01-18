@@ -31,7 +31,7 @@ class TahoeClient:
     The TahoeClient object makes requests to and returns responses from a locally running Tahoe client.
     """
     def __init__(self, base_url):
-        self.base_url = BASE_URL
+        self.base_url = base_url
 
     def upload_data(self, data):
         response = http.request(
@@ -62,11 +62,10 @@ def upload_string(tahoe_client, data):
     
 
 
-def get_string(tahoe_client):
+def get_string(tahoe_client, uri):
     """
     Retrieve and return the contents of the string uploaded by upload_string.
     """
-    uri = upload_string(tahoe_client, TEST_STRING)
 
     retrieved_string = tahoe_client.retrieve_data(uri)
 
@@ -76,4 +75,4 @@ def get_string(tahoe_client):
 
 
 if __name__ == "__main__":
-    get_string(tahoe_client)
+    get_string(tahoe_client, upload_string(tahoe_client, TEST_STRING))

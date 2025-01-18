@@ -64,11 +64,12 @@ def test_upload_string(capsys):
     assert result == expected
     assert output == expected_output
 
-def test_retrieve_string(capsys):
+def test_retrieve_string():
     tahoe_client = FakeTahoe()
     uri = upload_string(tahoe_client, 'test_string')
-    result = tahoe_client.retrieve_data(uri)
+    result = get_string(tahoe_client)
+    breakpoint()
+
     expected = 'test_string'
-    output = capsys.readouterr().out.rstrip()
 
     assert result == expected
