@@ -6,18 +6,20 @@ Decision Records
 Choose an HTTP client for the examples
 ======================================
 
-urllib3
-Httpx
-Httpie
+requests
+
+SQLite for the "database" in Private facts
 
 
 Introduce the file/path metaphor later?
 =======================================
 
-
+Do it later
 
 Other pending content
 =====================
+
+Footnote on the LIT (for short items, that don't even leave the client)
 
 Domain Model
 ============

@@ -1,0 +1,64 @@
+'tahoe run' in '/Users/bpabon/src/repos/tahoe/tahoe-lafs/docs/examples/introducer0'
+running node in '/Users/bpabon/src/repos/tahoe/tahoe-lafs/docs/examples/introducer0'
+2024-10-01T11:49:56-0400 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 24.7.0 (/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/bin/python 3.12.6) starting up.
+2024-10-01T11:49:56-0400 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.selectreactor.SelectReactor.
+2024-10-01T11:49:57-0400 [-] Foolscap logging initialized
+2024-10-01T11:49:57-0400 [-] Note to developers: twistd.log does not receive very much.
+2024-10-01T11:49:57-0400 [-] Use 'flogtool tail -c NODEDIR/private/logport.furl' instead
+2024-10-01T11:49:57-0400 [-] and read docs/logging.rst
+2024-10-01T11:49:57-0400 [twisted.internet.defer#critical] Unhandled error in Deferred:
+2024-10-01T11:49:57-0400 [twisted.internet.defer#critical] 
+	Traceback (most recent call last):
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/application/service.py", line 284, in stopService
+	    l.append(defer.maybeDeferred(service.stopService))
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 212, in maybeDeferred
+	    result = f(*args, **kwargs)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/allmydata/node.py", line 1061, in stopService
+	    return service.MultiService.stopService(self)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/application/service.py", line 284, in stopService
+	    l.append(defer.maybeDeferred(service.stopService))
+	--- <exception caught here> ---
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 212, in maybeDeferred
+	    result = f(*args, **kwargs)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/foolscap/pb.py", line 584, in stopService
+	    assert self.running
+	builtins.AssertionError: 
+	
+2024-10-01T11:49:57-0400 [twisted.internet.defer#critical] Unhandled error in Deferred:
+2024-10-01T11:49:57-0400 [twisted.internet.defer#critical] 
+	Traceback (most recent call last):
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/application/service.py", line 284, in stopService
+	    l.append(defer.maybeDeferred(service.stopService))
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 212, in maybeDeferred
+	    result = f(*args, **kwargs)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/allmydata/node.py", line 1061, in stopService
+	    return service.MultiService.stopService(self)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/application/service.py", line 284, in stopService
+	    l.append(defer.maybeDeferred(service.stopService))
+	--- <exception caught here> ---
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 212, in maybeDeferred
+	    result = f(*args, **kwargs)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/foolscap/pb.py", line 584, in stopService
+	    assert self.running
+	builtins.AssertionError: 
+	
+2024-10-01T11:49:57-0400 [twisted.internet.defer#critical] Unhandled error in Deferred:
+2024-10-01T11:49:57-0400 [twisted.internet.defer#critical] 
+	Traceback (most recent call last):
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 212, in maybeDeferred
+	    result = f(*args, **kwargs)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/application/service.py", line 284, in stopService
+	    l.append(defer.maybeDeferred(service.stopService))
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 212, in maybeDeferred
+	    result = f(*args, **kwargs)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/application/service.py", line 284, in stopService
+	    l.append(defer.maybeDeferred(service.stopService))
+	--- <exception caught here> ---
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/internet/defer.py", line 212, in maybeDeferred
+	    result = f(*args, **kwargs)
+	  File "/Users/bpabon/src/repos/tahoe/tahoe-lafs/.venv/lib/python3.12/site-packages/twisted/application/internet.py", line 324, in stopService
+	    if self._loop.running:
+	builtins.AttributeError: 'TimerService' object has no attribute '_loop'
+	
+2024-10-01T11:49:57-0400 [twisted.internet.base#info] Main loop terminated.
+2024-10-01T11:49:57-0400 [twisted.scripts._twistd_unix.UnixAppLogger#info] Server Shut Down.
