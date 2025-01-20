@@ -1,7 +1,7 @@
 
 import pytest
 import subprocess
-from hello_world import upload_string
+from hello_world import upload_string, get_string
 
 # The key is the data to be uploaded; the value is the URI Tahoe returns.
 fake_data = {
@@ -17,11 +17,11 @@ class FakeTahoe:
 
     def upload_data(self, data):
         uri = fake_data.get(data) # Get the URI from the fake_data dict
-        self.storage[uri] = datadata # Store the URI as key and the data as value for later retrieval
+        self.storage[uri] = data # Store the URI as key and the data as value for later retrieval
         return uri
 
     def retrieve_data(self, uri):
-        return self.stored_data.get(uri)
+        return self.storage.get(uri)
 
 
 @pytest.mark.skip(reason="Code has changed.")
@@ -39,15 +39,37 @@ def test_upload_string_deprecated():
     result = upload_string()
     assert result == expected
 
-def test_upload_string():
+def test_fake_tahoe_upload_string():
     fake_tahoe = FakeTahoe()
     result = fake_tahoe.upload_data('test_string')
     expected = fake_data.get('test_string')
+    
     assert result == expected
 
-def test_upload_and_retrieve_string():
+def test_fake_tahoe_upload_and_retrieve_string():
     fake_tahoe = FakeTahoe()
     uri = fake_tahoe.upload_data('test_string')
     result = fake_tahoe.retrieve_data(uri)
     expected = 'test_string'
+    
     assert result == expected
+
+def test_upload_string(capsys):
+    tahoe_client = FakeTahoe()
+    result = upload_string(tahoe_client, 'test_string')
+    expected = 'test_string_uri'
+    output = capsys.readouterr().out.rstrip()
+    expected_output = fake_data.get('test_string')
+
+    assert result == expected
+    assert output == expected_output
+
+def test_get_string(capsys):
+    tahoe_client = FakeTahoe()
+    result = get_string(tahoe_client, upload_string(tahoe_client, 'test_string'))
+    expected = 'test_string'
+    output = capsys.readouterr().out.rstrip().split()[1] # Get only the second line of output, since upload_string also prints a line
+    expected_output = expected
+
+    assert result == expected
+    assert output == expected_output
