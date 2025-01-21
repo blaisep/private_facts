@@ -1,0 +1,18 @@
+.. code-block:: python
+
+    BASE_URL =
+    http = urllib3.PoolManager()
+
+
+    def upload_string():
+        """
+        Upload the contents of the test string via the Tahoe client and return fURL.
+        """
+        resp = http.request(
+            "PUT",
+            "http://127.0.0.1:3456/uri/",
+            "Hello, world! You now have data in Tahoe-lafs."
+        )
+        furl = resp.data.decode("utf-8")
+        print(furl)
+        return furl
