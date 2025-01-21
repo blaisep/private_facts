@@ -14,9 +14,9 @@ user --> app : "Submits some content"
     tahoe -> tahoe : create reference id
     tahoe -> tahoe : encrypt & fragment
     tahoe ->  disk : send fragments in "shares"
-    tahoe -> app : return reference id
+    tahoe -> app : return URI
     deactivate tahoe
-app -> app : store reference id
+app -> app : store URI
 app --> user : "Content OK"
 deactivate app
 

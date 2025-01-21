@@ -3,8 +3,7 @@ Using the Sample App Tutorial
 
 Learn to integrate Tahoe-LAFS with your app using the Web API, let's start by interacting with the service using the CLI.
 
-Ensure your client is working
-------------------------------
+Set up your local
 
 Use the CLI to move some files in and out of Tahoe-LAFS
 
@@ -23,20 +22,21 @@ Begin by uploading a string using either the CLI, a python script, or a ``curl``
 
     .. code-block:: python
 
-        BASE_URL=
+        BASE_URL =
         http = urllib3.PoolManager()
         def upload_string():
             """
             Upload the contents of the test string via the Tahoe client and return fURL.
             """
             resp = http.request(
-            "PUT",
-            "http://127.0.0.1:3456/uri/",
-            "Hello, world! You now have data in Tahoe-lafs."
-        )
+                "PUT",
+                "http://127.0.0.1:3456/uri/",
+                "Hello, world! You now have data in Tahoe-lafs."
+            )
             furl = resp.data.decode("utf-8")
             print(furl)
             return furl
+
 
 .. tab:: Curl
 
@@ -53,7 +53,7 @@ Upload a longer string
 ======================
 
 Summary:
-Here we upload a longer string and observe the structure of the linke that returns.
+Here we upload a longer string and observe the structure of the link that returns.
 
 
 Upload a simple text file
