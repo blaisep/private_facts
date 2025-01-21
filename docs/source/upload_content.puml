@@ -2,22 +2,22 @@
 skinparam Shadowing false
 
 actor "User" as user
-participant "Web\nApp" as app
-database "Tahoe\nAgent " as tahoe
-database "Storage\nGrid" as grid
+entity "Simple\nFacts" as app
+entity "Tahoe\n'Client' " as tahoe
+Collections "Tahoe\nStorage0" as disk
 
-group User Uploads
+group Uploads
 activate app
-user --> app : "Submits a form"
-activate tahoe
-app -> tahoe : Upload a file
-tahoe -> tahoe : create capability fURL
-tahoe -x  grid : send content in shares
-tahoe -> tahoe : Store fURL metadata??
-tahoe -> app : return capability fURL
-app -x app : store fURL
-app --> user : display content
-deactivate tahoe
+user --> app : "Submits some content"
+    activate tahoe
+    app -> tahoe : HTTP Put...
+    tahoe -> tahoe : create reference id
+    tahoe -> tahoe : encrypt & fragment
+    tahoe ->  disk : send fragments in "shares"
+    tahoe -> app : return reference id
+    deactivate tahoe
+app -> app : store reference id
+app --> user : "Content OK"
 deactivate app
 
 end
