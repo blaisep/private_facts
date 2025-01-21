@@ -3,8 +3,7 @@ Using the Sample App Tutorial
 
 Learn to integrate Tahoe-LAFS with your app using the Web API, let's start by interacting with the service using the CLI.
 
-Ensure your client is working
-------------------------------
+Set up your local
 
 Use the CLI to move some files in and out of Tahoe-LAFS
 
@@ -23,50 +22,71 @@ Begin by uploading a string using either the CLI, a python script, or a ``curl``
 
     .. code-block:: python
 
-        BASE_URL=
+        BASE_URL =
         http = urllib3.PoolManager()
         def upload_string():
             """
             Upload the contents of the test string via the Tahoe client and return fURL.
             """
             resp = http.request(
-            "PUT",
-            "http://127.0.0.1:3456/uri/",
-            "Hello, world! You now have data in Tahoe-lafs."
-        )
+                "PUT",
+                "http://127.0.0.1:3456/uri/",
+                "Hello, world! You now have data in Tahoe-lafs."
+            )
             furl = resp.data.decode("utf-8")
             print(furl)
             return furl
+
 
 .. tab:: Curl
 
     .. code-block::
 
-        curl code
-
+        curl ...
 
 Then save the result (eg. ``URI:LIT:jbswy3dpeblw64tmmqfa`` ) this will serve to refer to the data later.
 
-.. note:: Since put is idempotent.
+.. note:: For very small strings (less than 53 bytes), the client will avoid relying on external storage.
 
 
-Upload a simple file:
+Upload a longer string
+======================
+
+Summary:
+Here we upload a longer string and observe the structure of the link that returns.
+
+
+Upload a simple text file
+==========================
+
+Summary:
+Uploading a file involves the local file/path. The type of file does not matter. When the file is retrieved,
+the contents can be written to the same file, another local file, or a helper app.
 
         $ echo "Hello World" > hello.txt
         $ tahoe --node-directory=tahoe-server/client0 put ./hello.txt
 
-Note the result ``URI:LIT: ...``
-(let's use ``URI:LIT:jbswy3dpeblw64tmmqfa`` just as an example.)
+Note the result ``URI: ...`` because the client needs that to find the file.
 
 Download the contents of the text file
 --------------------------------------
 
-Now we can download the CONTENTS of the file
+Summary:
+Download the CONTENTS of the file, view it directly and write the contents to a local file.
 
 .. code-block::
 
-    $ tahoe --node-directory=tahoe-server/client0 get URI:LIT:jbswy3dpeblw64tmmqfa``.
+    $ tahoe --node-directory=tahoe-server/client0 get URI:LIT:jbswy3dpeblw64tmmqfa .
 
+(the trailing ``.``  refers to the destination. In this case it writes to the terminal
+
+But, what if we need to save the contents for later? Then we write to a local file and specify the type
+
+
+Save the contents into a local file
+-----------------------------------
+
+Summary:
 We can redirect the contents of the file using a redirection:
 
 .. code-block::
@@ -74,8 +94,11 @@ We can redirect the contents of the file using a redirection:
         $ tahoe --node-directory=tahoe-server/client0 get URI:LIT:jbswy3dpeblw64tmmqfa`` > hello_back.txt
 
 
-Upload an image file
---------------------
+Upload an image (binary) file
+=============================
+
+Summary:
+Upload a file with a binary type. In this case, a logo.
 
 .. code-block::
 
@@ -92,23 +115,6 @@ Image files don't look good in the terminal, so you will write the contents to a
 
 
 Use a viewer to see the image contents of the file.
-
-First: smallest possible session save and retrieve some data
-============================================================
-
-    * (CLI only for now)
-    * Send a string  to Tahoe
-    * receive a fURL
-    * retrieve string using the fURL
-    * print the fURL
-    * print the string
-
-Example:
-
-.. code-block::
-
-    http://127.0.0.1:3456/uri/URI:DIR2:u63su5g3ejfylhezb5l6w763xq:p3goyai4uk6azmzwes5twm4o2rqn6d4mq7jn3br7g45jsonmwtha/
-
 
 Web API using python
 ====================

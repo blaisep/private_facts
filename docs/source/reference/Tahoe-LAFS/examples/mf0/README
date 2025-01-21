@@ -1,0 +1,6 @@
+This is a Magic Folder daemon configuration
+
+To find out more you can run a command like:
+
+    magic-folder --config /Users/bpabon/src/repos/tahoe/tahoe-lafs/docs/examples/mf0 --help
+

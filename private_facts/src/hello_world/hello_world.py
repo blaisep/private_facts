@@ -4,10 +4,11 @@
 import sys
 import urllib3
 
-# If TEST_STRING is under a certain number of bytes, it will be encoded in the URL.
-# You can test this by uploading SHORT_TEST_STRING instead of TEST_STRING to Tahoe.
+
+# If TEST_STRING is under a certain number of bytes, it will be encoded in the URL
 SHORT_TEST_STRING = "Hello, world!"
-TEST_STRING = "Hello, world! You now have data in Tahoe-lafs, encoded outside of the URL."
+TEST_STRING = "Hello, world! You now have data in Tahoe-lafs, but only in your client, not yet on any grid.."
+
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
 
@@ -39,10 +40,12 @@ class TahoeClient:
 
 tahoe_client = TahoeClient(base_url=BASE_URL)
 
+
 def upload_string(tahoe_client, data):
     """
     Upload the contents of the test string via tahoe_client and return its URI.
     """
+    
     try:
         uri = tahoe_client.upload_data(data)
         print(uri)
@@ -61,6 +64,7 @@ def get_string(tahoe_client, uri):
     print(retrieved_string)
     return retrieved_string
 
+
 def main():
     uri = upload_string(tahoe_client, TEST_STRING)
     if uri is None:
@@ -69,4 +73,4 @@ def main():
     get_string(tahoe_client, uri)
 
 if __name__ == "__main__":
-    main()
+    get_string(tahoe_client, upload_string(tahoe_client, TEST_STRING))
