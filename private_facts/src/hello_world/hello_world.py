@@ -75,7 +75,10 @@ def get_string(tahoe_client, uri):
     print(retrieved_string)
     return retrieved_string
 
-
-if __name__ == "__main__":
+def main():
     uri = upload_string(tahoe_client, TEST_STRING)
     get_string(tahoe_client, uri)
+
+
+if __name__ == "__main__":
+    main()
