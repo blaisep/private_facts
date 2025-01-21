@@ -1,21 +1,7 @@
 
-"""smallest possible session: save and retrieve some data.
+# Tahoe hello world: save and retrieve a string to a Tahoe storage server using a Tahoe client.
 
-    (CLI only for now)
-    Send a string  to Tahoe
-    receive a fURL
-    retrieve string using the fURL
-    print the fURL
-    print the string
-
-    Example:
-    ```
-        $ python -m private_facts.hello-world
-        ...
-        fURL=
-        string = "Hello World"
-    ```
-"""
+import sys
 import urllib3
 
 # If TEST_STRING is under a certain number of bytes, it will be encoded in the URL.
@@ -62,8 +48,8 @@ def upload_string(tahoe_client, data):
         print(uri)
         return uri
     except Exception as e:
-        print(f"An error occurred during upload: {e}")
-        raise
+        print(f"An error occurred during upload: {e.reason}")
+        return None
 
 def get_string(tahoe_client, uri):
     """
@@ -77,8 +63,10 @@ def get_string(tahoe_client, uri):
 
 def main():
     uri = upload_string(tahoe_client, TEST_STRING)
+    if uri is None:
+        print("Upload error: are you sure the client and storage are running?")
+        sys.exit(1)
     get_string(tahoe_client, uri)
-
 
 if __name__ == "__main__":
     main()
