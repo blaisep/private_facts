@@ -12,7 +12,15 @@ Private facts is an example project to learn how a developer can interact with T
 What happens when you use Private Facts?
 ========================================
 
+Saving content using the Tahoe backing store:
+
 .. image:: upload_content.png
+
+
+Retrieving content from the Tahoe backing store:
+
+.. image:: retrieve_content.png
+
 
 .. toctree::
     :maxdepth: 1
@@ -20,7 +28,6 @@ What happens when you use Private Facts?
     tutorials/index
     faq
     glossary
-
 
 Team Internal notes
 ===================
