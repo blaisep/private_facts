@@ -1,16 +1,14 @@
 
-# Tahoe hello world: save and retrieve a string to a Tahoe storage server using a Tahoe client.
-
-import sys
+"""
+Same as hello_world.py but sending a file instead of a string.
+"""
+from pathlib import Path
 import urllib3
 
 
-# If TEST_STRING is under a certain number of bytes, it will be encoded in the URL
-SHORT_TEST_STRING = "Hello, world!"
-TEST_STRING = "Hello, world! You now have data in Tahoe-lafs, but only in your client, not yet on any grid.."
-
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
+FILEPATH=Path(__file__).parent / "hello_world.txt"
 
 http = urllib3.PoolManager()
 
@@ -40,19 +38,14 @@ class TahoeClient:
 
 tahoe_client = TahoeClient(base_url=BASE_URL)
 
-
-def upload_string(tahoe_client, data):
+def upload_file(tahoe_client, data):
     """
     Upload the contents of the test string via tahoe_client and return its URI.
     """
-    
-    try:
-        uri = tahoe_client.upload_data(data)
-        print(uri)
-        return uri
-    except Exception as e:
-        print(f"An error occurred during upload: {e.reason}")
-        return None
+    uri = tahoe_client.upload_data(data)
+    print(uri)
+    return uri
+
 
 def get_string(tahoe_client, uri):
     """
@@ -65,12 +58,7 @@ def get_string(tahoe_client, uri):
     return retrieved_string
 
 
-def main():
-    uri = upload_string(tahoe_client, TEST_STRING)
-    if uri is None:
-        print("Upload error: are you sure the client and storage are running?")
-        sys.exit(1)
-    get_string(tahoe_client, uri)
 
 if __name__ == "__main__":
-    get_string(tahoe_client, upload_string(tahoe_client, TEST_STRING))
+    # get_string(tahoe_client, upload_string(tahoe_client, TEST_STRING))
+    upload_file(tahoe_client, FILEPATH)
