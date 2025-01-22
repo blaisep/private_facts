@@ -23,22 +23,7 @@ class FakeTahoe:
     def retrieve_data(self, uri):
         return self.storage.get(uri)
 
-
-@pytest.mark.skip(reason="Code has changed.")
-def test_entrypoint():
-    expected = "The contents of the test string are: Hello, world!"
-    process = subprocess.run(
-        ["python3", "private_facts/src/hello_world/hello_world.py"], capture_output=True, text=True
-    )
-    output = process.stdout.rstrip()
-    assert output == expected
-
-@pytest.mark.skip(reason="Code has changed.")
-def test_upload_string_deprecated():
-    expected = "http://127.0.0.1:3456/uri/URI%3ADIR2%3Adjrdkfawoqihigoett4g6auz6a%3Ajx5mplfpwexnoqff7y5e4zjus4lidm76dcuarpct7cckorh2dpgq/"
-    result = upload_string()
-    assert result == expected
-
+# FakeTahoe tests
 def test_fake_tahoe_upload_string():
     fake_tahoe = FakeTahoe()
     result = fake_tahoe.upload_data('test_string')
@@ -54,6 +39,7 @@ def test_fake_tahoe_upload_and_retrieve_string():
     
     assert result == expected
 
+# hello_world tests
 def test_upload_string(capsys):
     tahoe_client = FakeTahoe()
     result = upload_string(tahoe_client, 'test_string')
