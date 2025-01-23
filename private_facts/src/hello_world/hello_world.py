@@ -1,15 +1,14 @@
-
 # Tahoe hello world: save a string to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
 
-import ipdb
 import json
 import sys
 import urllib3
 
 
-# If the string passed in is under a certain number of bytes, it will be encoded in the URL
+# If the string passed in is under a certain number of bytes, it will be encoded in the URL rather than stored in the server.
+# You can see this by passing SHORT_TEST_STRING instead of TEST_STRING; the capability string will have a LIT instead of a CHK prefix.
 SHORT_TEST_STRING = "Hello, world!"
-TEST_STRING = "Hello, world! You now have data in Tahoe-lafs, but only in your client, not yet on any grid."
+TEST_STRING = "Hello, world! You now have data in a single Tahoe-lafs storage server."
 
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
@@ -38,10 +37,10 @@ class TahoeClient:
 
         return response.data.decode("utf-8")
 
-    def retrieve_data(self, uri):
+    def retrieve_data(self, cap_string):
         response = http.request(
         "GET",
-        self.base_url + uri
+        self.base_url + cap_string
         )
 
         if response.status != 200:
@@ -50,6 +49,9 @@ class TahoeClient:
         return response.data.decode("utf-8"), response.status
     
     def get_welcome(self):
+        """
+        Get the Tahoe Welcome page in json format. Inspired by meejah's magic folder tahoe client: https://github.com/tahoe-lafs/magic-folder/blob/main/src/magic_folder/tahoe_client.py
+        """
         try:
             response = http.request(
             "GET",
@@ -65,24 +67,24 @@ tahoe_client = TahoeClient(base_url=BASE_URL)
 
 def upload_string(tahoe_client, data):
     """
-    Upload the contents of the test string via tahoe_client and return its URI.
+    Upload the contents of the test string via tahoe_client and return its capability string.
     """
     
     # try:
-    uri = tahoe_client.upload_data(data)
-    if uri is None:
+    cap_string = tahoe_client.upload_data(data)
+    if cap_string is None:
         print(f"An error occurred during upload.")
         return None
     
-    print(uri)
-    return uri
+    print(cap_string)
+    return cap_string
 
-def get_string(tahoe_client, uri):
+def get_string(tahoe_client, cap_string):
     """
-    Retrieve the contents of the string by passing the uri to the tahoe_client.
+    Retrieve the contents of the string by passing the capabiltiy string to the tahoe_client.
     """
 
-    retrieved_string, status = tahoe_client.retrieve_data(uri)
+    retrieved_string, status = tahoe_client.retrieve_data(cap_string)
 
     if status != 200:
         print(f"An error occurred retrieving the data with error code: {status}")
@@ -99,11 +101,11 @@ def main():
     except Exception:
         print("Cannot access Tahoe welcome page. Are you sure the client is running?")
         sys.exit(1)
-    uri = upload_string(tahoe_client, TEST_STRING)
-    if uri is None:
+    cap_string = upload_string(tahoe_client, TEST_STRING)
+    if cap_string is None:
         print("Are you sure the client and storage are running and properly configured?")
         sys.exit(1)
-    if get_string(tahoe_client, uri) is None:
+    if get_string(tahoe_client, cap_string) is None:
         print("Are you sure the storage is running?")
         sys.exit(1)
 
