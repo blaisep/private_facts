@@ -31,7 +31,7 @@ Begin by uploading a string using either the CLI, a python script, or a ``curl``
             resp = http.request(
                 "PUT",
                 "http://127.0.0.1:3456/uri/",
-                "Hello, world! You now have data in Tahoe-lafs."
+                "name:Abigail, heart_rate:82, bp:110/75,flow_rate:0,temp:98.6"
             )
             furl = resp.data.decode("utf-8")
             print(furl)
@@ -124,7 +124,7 @@ Use the sample python code to interact with the Web API.::
     $ python -m private_facts.hello-world
     ...
     fURL=
-    string = "Hello World"
+    string = "name:Abigail, heart_rate:82, bp:110/75,flow_rate:0,temp:98.6"
 
 
 Storing the fURL: treat fURLs as secret
