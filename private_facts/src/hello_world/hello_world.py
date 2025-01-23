@@ -1,5 +1,4 @@
 # Private facts hello world: save a string of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
-import json
 import sys
 import urllib3
 
