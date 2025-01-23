@@ -1,5 +1,4 @@
-# Tahoe hello world: save a string to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
-
+# Private facts hello world: save a string of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
 import json
 import sys
 import urllib3
@@ -8,8 +7,7 @@ import urllib3
 # If the string passed in is under a certain number of bytes, it will be encoded in the URL rather than stored in the server.
 # You can see this by passing SHORT_TEST_STRING instead of TEST_STRING; the capability string will have a LIT instead of a CHK prefix.
 SHORT_TEST_STRING = "Hello, world!"
-TEST_STRING = "Hello, world! You now have data in a single Tahoe-lafs storage server."
-
+TEST_STRING = "name:Abigail, heart_rate:82, bp:110/75, flow_rate:0, temp: 36.8"
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
 
