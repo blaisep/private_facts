@@ -28,7 +28,7 @@ def test_create_user() -> None:
 def test_read_user() -> None:
     pass
 
-def test_simple() -> None:
+def test_lifecycle() -> None:
     """Start with no users, then create one, fetch it, delete, should be gone."""
     response = client.get("/")
     assert response.status_code == status.HTTP_200_OK
