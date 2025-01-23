@@ -7,6 +7,27 @@ from src.main import app
 
 client = TestClient(app)
 
+def test_root_path() -> None:
+    """The app returns a valid path ."""
+    response = client.get("/")
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == []
+
+def test_create_user() -> None:
+    response = client.post("/fred?birthdate=1969-07-20",
+                           json={
+                               "blood_type": "ab+",
+                               "zodiac_sign": "scorpio",
+                               "meyers_briggs": {
+                                   "ei": "i",
+                                   "sn": "n",
+                                   "tf": "t",
+                                   "jp": "j"}})
+    assert response.status_code == status.HTTP_201_CREATED
+
+def test_read_user() -> None:
+    pass
+
 def test_simple() -> None:
     """Start with no users, then create one, fetch it, delete, should be gone."""
     response = client.get("/")

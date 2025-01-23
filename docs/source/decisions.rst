@@ -3,6 +3,10 @@ Decision Records
 ====================
 
 
+Read/write to to SQLite on start/exit (and write to local file for cache)
+(otherwise mod SQLite to use Tahoe)
+write to redis on the fly (for caching) : more dependencies
+
 Choose an HTTP client for the examples
 ======================================
 

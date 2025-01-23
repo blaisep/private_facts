@@ -65,6 +65,7 @@ async def add_user(username: Str1To64,
 
     return users[username]
 
+
 @app.delete("/{username}")
 async def delete_user(username: str) -> Response:
     """Remove user from RAM."""
