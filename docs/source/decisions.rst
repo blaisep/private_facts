@@ -12,6 +12,11 @@ Time Zone for date field?
 
 UTC would be best and then (optionally display in the user's locale?)
 
+Kelvin for temp
+===============
+
+Should I collect from user in C or F rather than force them to enter Kelvin?
+
 Choose an HTTP client for the examples
 ======================================
 
