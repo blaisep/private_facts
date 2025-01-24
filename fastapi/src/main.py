@@ -11,7 +11,19 @@ from .blood_type import BloodType
 from .meyers_briggs import MeyersBriggs
 from .zodiac_sign import ZodiacSign
 
-
+# tahoe   <-- root ?
+#    Abigail    <-- dir cap
+#      20250122  <-- dir cap
+#        facts (an event)
+#          {Name:Abigail,
+#          Pulse:82,
+#          BP:
+#          {'diastolic': 110,
+#          'systolic': 75},
+#         'Temperature_in_Kelvin': 340.95,  <-- file cap
+#          Flow Rate:0,   <-- file cap
+#          }
+#
 app = FastAPI()
 today = date.today()
 
@@ -34,8 +46,25 @@ class User(BaseModel):
     birthdate: date
     dubious_characteristics: DubiousCharacteristics
 
+    def create_event(self):
+        event = Event(
+            user: self.username,
+            date: today,
+            data: {'name': Abigail,
+                 'heart_rate': 82,
+                 'blood_pressure': 110/75,
+                 'flow_rate': 0,
+                 }
+        )
 
 users: dict[str, User] = {}
+
+
+class Event(BaseModel):
+    user: username
+    date (time): datetime
+    data: dict
+
 
 
 @app.get("/",
@@ -64,6 +93,7 @@ async def add_user(username: Str1To64,
                            dubious_characteristics=dubious_characteristics)
 
     return users[username]
+
 
 @app.delete("/{username}")
 async def delete_user(username: str) -> Response:

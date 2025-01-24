@@ -1,0 +1,25 @@
+@startuml
+skinparam Shadowing false
+
+actor "User" as user
+entity "Simple\nFacts" as app
+entity "Tahoe\n'Client' " as tahoe
+Collections "Tahoe\nStorage0" as disk
+
+group Storing content
+activate app
+user --> app : "Submits some content"
+    activate tahoe
+    app -> tahoe : HTTP Put... (value)
+    tahoe -> tahoe : create reference id
+    tahoe -> tahoe : encrypt & fragment
+    tahoe --> tahoe : look up storage servers
+    tahoe ->  disk : send fragments in "shares"
+    tahoe -> app : return tahoe URI
+    deactivate tahoe
+app -> app : store URI for (key:value pair)
+app --> user : "Content OK"
+deactivate app
+
+end
+@enduml
