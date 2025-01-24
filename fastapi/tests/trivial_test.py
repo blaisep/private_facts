@@ -24,25 +24,6 @@ def test_create_user() -> None:
                                    "tf": "t",
                                    "jp": "j"}})
     assert response.status_code == status.HTTP_201_CREATED
-
-def test_read_user() -> None:
-    pass
-
-def test_lifecycle() -> None:
-    """Start with no users, then create one, fetch it, delete, should be gone."""
-    response = client.get("/")
-    assert response.status_code == status.HTTP_200_OK
-    assert response.json() == []
-    response = client.post("/fred?birthdate=1969-07-20",
-                           json={
-                               "blood_type": "ab+",
-                               "zodiac_sign": "scorpio",
-                               "meyers_briggs": {
-                                   "ei": "i",
-                                   "sn": "n",
-                                   "tf": "t",
-                                   "jp": "j"}})
-    assert response.status_code == status.HTTP_201_CREATED
     assert response.json() == {
         "username": "fred",
         "birthdate": "1969-07-20",
@@ -54,8 +35,23 @@ def test_lifecycle() -> None:
                 "sn": "n",
                 "tf": "t",
                 "jp": "j"}}}
-    # Dup should fail
-    response = client.post("/fred?birthdate=2000-01-01",
+
+    get_created_user = client.get("/")
+    assert get_created_user.status_code == status.HTTP_200_OK
+    assert len(get_created_user.json()) == 1
+
+
+def test_create_duplicate_username_fails() -> None:
+    first_user = client.post("/fred?birthdate=1969-07-20",
+                           json={
+                               "blood_type": "ab+",
+                               "zodiac_sign": "scorpio",
+                               "meyers_briggs": {
+                                   "ei": "i",
+                                   "sn": "n",
+                                   "tf": "t",
+                                   "jp": "j"}})
+    second_user = client.post("/fred?birthdate=2000-01-01",
                            json={
                                "blood_type": "o-",
                                "zodiac_sign": "virgo",
@@ -64,18 +60,29 @@ def test_lifecycle() -> None:
                                    "sn": "s",
                                    "tf": "f",
                                    "jp": "p"}})
-    assert response.status_code == status.HTTP_409_CONFLICT
-    # One item should exist
-    response = client.get("/")
-    assert response.status_code == status.HTTP_200_OK
-    assert len(response.json()) == 1
-    # Delete it
+
+    assert second_user.status_code == status.HTTP_409_CONFLICT
+
+def test_delete_user():
+    user = client.post("/fred?birthdate=1969-07-20",
+                           json={
+                               "blood_type": "ab+",
+                               "zodiac_sign": "scorpio",
+                               "meyers_briggs": {
+                                   "ei": "i",
+                                   "sn": "n",
+                                   "tf": "t",
+                                   "jp": "j"}})
+
     response = client.delete("/fred")
     assert response.status_code == status.HTTP_204_NO_CONTENT
     # Actually deleted
     response = client.get("/")
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == []
-    # Delete again should fail
     response = client.delete("/fred")
     assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+def test_read_user() -> None:
+    pass
