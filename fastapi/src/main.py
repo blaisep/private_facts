@@ -11,7 +11,17 @@ from .blood_type import BloodType
 from .meyers_briggs import MeyersBriggs
 from .zodiac_sign import ZodiacSign
 
-
+# tahoe   <-- root ?
+#    Abigail    <-- dir cap
+#      20250122  <-- dir cap
+#        facts (an event)
+#          {Name:Abigail,
+#          Heart Rate:82,
+#          BP:110/75,
+#         'Temperature': 67.8,  <-- file cap
+#          Flow Rate:0,   <-- file cap
+#          }
+#
 app = FastAPI()
 today = date.today()
 

@@ -12,12 +12,12 @@ Private Facts
 Private Facts aims to be the the mega tutorial to learn how a developer can interact with Tahoe-lafs from a user-facing application.
 This series of steps will cover the following milestones:
 
-    * create a local Tahoe-LAFS dev environment.
-    * use the CLI to send some text and some files.
+    * create a local Tahoe-LAFS dev environment
+    * use the CLI to send some text and some files
     * use the WebAPI to send some text and some files (examples with Python and curl)
-    * refactor a simple FastAPI app to use Tahoe-LAFS as a backing store.
-    * use Tahoe-LAFS as a backing store for a simple FastAPI app.
-    * integrate a more complex data model from your app using SQLite and Tahoe-LAFS
+    * refactor a simple FastAPI app to connect to Tahoe-LAFS
+    * use Tahoe-LAFS as a backing store for that simple FastAPI app
+    * integrate a more complex data model from the FastAPI using SQLite and Tahoe-LAFS
 
 
 What happens when you use Private Facts?

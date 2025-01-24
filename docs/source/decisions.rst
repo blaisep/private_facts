@@ -7,6 +7,11 @@ Read/write to to SQLite on start/exit (and write to local file for cache)
 (otherwise mod SQLite to use Tahoe)
 write to redis on the fly (for caching) : more dependencies
 
+Time Zone for date field?
+=========================
+
+UTC would be best and then (optionally display in the user's locale?)
+
 Choose an HTTP client for the examples
 ======================================
 
