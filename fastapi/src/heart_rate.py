@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 # Define the heart rate model
 # Warning, ChatGPT
-class HeartRate(BaseModel):
+class Pulse(BaseModel):
     value: int = Field(..., title="Heart Rate", description="Heart rate in beats per minute (BPM)", ge=30, le=220)
     unit: str = Field("BPM", const=True, description="Heart rate unit")
 
