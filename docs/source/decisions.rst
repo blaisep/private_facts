@@ -17,6 +17,12 @@ Kelvin for temp
 
 Should I collect from user in C or F rather than force them to enter Kelvin?
 
+Flow rate from 0 - 50
+=====================
+
+Should the upper boundary be lower?
+
+
 Choose an HTTP client for the examples
 ======================================
 
