@@ -2,7 +2,7 @@
 skinparam Shadowing false
 
 actor "User" as user
-entity "Simple\nFacts" as app
+entity "Private\nFacts" as app
 entity "Tahoe\n'Client' " as tahoe
 Collections "Tahoe\nStorage0" as disk
 
