@@ -2,10 +2,12 @@
 skinparam Shadowing false
 
 actor "User" as user
-entity "Private\nFacts" as app
 Database "Local\nStorage" as local
-entity "Tahoe\n'Client' " as tahoe
+entity "Private\nFacts" as app
+Boundary "Tahoe\n'Client' " as tahoe
 Collections "Tahoe\nStorageGrid" as disk
+
+user <-- local : "                               "
 
 group Storing facts event
 activate app
@@ -19,16 +21,16 @@ user --> app : "Submits an event"
         tahoe -> tahoe : encrypt & fragment
         tahoe --> tahoe : look up storage servers
         tahoe ->  disk : send fragments in "shares"
-        tahoe -> app : return tahoe capability string
-        app -> local : store capability string for (Temperature)
+        tahoe -> app : return tahoe cap string
+        app -> local : store cap string for Temperature
         app -> tahoe : tahoe put ...Flow rate
-        tahoe -> tahoe : create reference id
+        tahoe -> tahoe : create capability string
         tahoe -> tahoe : encrypt & fragment
         tahoe --> tahoe : look up storage servers
         tahoe ->  disk : send fragments in "shares"
-        tahoe -> app : return tahoe capability string
+        tahoe -> app : return tahoe cap string
     deactivate tahoe
-app -> local : store capability string for (Flow Rate)
+app -> local : store cap string for Flow Rate
 app --> user : "Content OK"
 deactivate app
 
