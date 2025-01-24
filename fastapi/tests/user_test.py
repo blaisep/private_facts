@@ -2,10 +2,15 @@
 
 from fastapi import status
 from fastapi.testclient import TestClient
+import pytest
 
 from src.main import app
 
 client = TestClient(app)
+
+@pytest.fixture()
+def basic_user():
+
 
 def test_root_path() -> None:
     """The app returns a valid path ."""
@@ -15,14 +20,14 @@ def test_root_path() -> None:
 
 def test_create_user() -> None:
     response = client.post("/fred?birthdate=1969-07-20",
-                           json={
-                               "blood_type": "ab+",
-                               "zodiac_sign": "scorpio",
-                               "meyers_briggs": {
-                                   "ei": "i",
-                                   "sn": "n",
-                                   "tf": "t",
-                                   "jp": "j"}})
+       json={
+           "blood_type": "ab+",
+           "zodiac_sign": "scorpio",
+           "meyers_briggs": {
+               "ei": "i",
+               "sn": "n",
+               "tf": "t",
+               "jp": "j"}})
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json() == {
         "username": "fred",
