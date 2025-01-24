@@ -16,9 +16,11 @@ from .zodiac_sign import ZodiacSign
 #      20250122  <-- dir cap
 #        facts (an event)
 #          {Name:Abigail,
-#          Heart Rate:82,
-#          BP:110/75,
-#         'Temperature': 67.8,  <-- file cap
+#          Pulse:82,
+#          BP:
+#          {'diastolic': 110,
+#          'systolic': 75},
+#         'Temperature_in_Kelvin': 340.95,  <-- file cap
 #          Flow Rate:0,   <-- file cap
 #          }
 #
