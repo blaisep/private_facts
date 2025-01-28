@@ -5,7 +5,7 @@ from typing import Optional
 # app = FastAPI()
 
 # Blood Pressure Pydantic Model
-# Warning ChatGPT
+
 
 class BloodPressure(BaseModel):
     systolic: int = Field(..., ge=90, le=180, description="Systolic pressure in mmHg (should be between 90 and 180)")

@@ -113,7 +113,8 @@ html_theme = 'furo'
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    "sidebar_hide_name": True,
+    "navigation_with_keys": True,
+    "top_of_page_buttons": ["view", "edit"],
 }
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
