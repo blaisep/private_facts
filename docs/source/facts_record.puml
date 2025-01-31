@@ -1,0 +1,38 @@
+@startuml
+skinparam Shadowing false
+
+actor "User" as user
+Database "Local\nStorage" as local
+entity "Private\nFacts" as app
+Boundary "Tahoe\n'Client' " as tahoe
+Collections "Tahoe\nStorageGrid" as disk
+
+user <-- local : "                               "
+
+group Storing facts event
+activate app
+user --> app : "Submits an event"
+    app -> local : HTTP Put...Name
+    app -> local : HTTP Put...Heart Rate
+    app -> local : HTTP Put...Blood Pressure
+    activate tahoe
+        app -> tahoe : tahoe put ...Temperature
+        tahoe -> tahoe : create capability string
+        tahoe -> tahoe : encrypt & fragment
+        tahoe --> tahoe : look up storage servers
+        tahoe ->  disk : send fragments in "shares"
+        tahoe -> app : return tahoe cap string
+        app -> local : store cap string for Temperature
+        app -> tahoe : tahoe put ...Flow rate
+        tahoe -> tahoe : create capability string
+        tahoe -> tahoe : encrypt & fragment
+        tahoe --> tahoe : look up storage servers
+        tahoe ->  disk : send fragments in "shares"
+        tahoe -> app : return tahoe cap string
+    deactivate tahoe
+app -> local : store cap string for Flow Rate
+app --> user : "Content OK"
+deactivate app
+
+end
+@enduml

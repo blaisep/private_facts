@@ -6,15 +6,16 @@ entity "Private\nFacts" as app
 Boundary "Tahoe\n'Client' " as tahoe
 Collections "Tahoe\nStorage0" as disk
 
-group Send to Tahoe
+group Storing content
 activate app
-user --> app : "Submit some content"
+user --> app : "Submits some content"
     activate tahoe
-    app -> tahoe : HTTP Put...
-    tahoe -> tahoe : create capability string
+    app -> tahoe : HTTP Put... (value)
+    tahoe -> tahoe : capability string
     tahoe -> tahoe : encrypt & fragment
+    tahoe --> tahoe : look up storage servers
     tahoe ->  disk : send fragments in "shares"
-    tahoe -> app : return capability string
+    tahoe -> app : return tahoe capability string
     deactivate tahoe
 app -> app : store capability string
 app --> user : "Content OK"

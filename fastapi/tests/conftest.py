@@ -12,12 +12,13 @@ Repository Pattern? Object that responds to requests for read, write, metadata, 
 #     @abc.abstractmethod
 
 
-    """ Storage class
-    """
+"""
+    Storage class
+"""
 
-    """
-    Introducer Class
-    """
+"""
+Introducer Class
+"""
 
 """
 Domain Model: the problem we're trying to solve:
