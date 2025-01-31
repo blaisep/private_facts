@@ -3,6 +3,26 @@ Decision Records
 ====================
 
 
+Read/write to to SQLite on start/exit (and write to local file for cache)
+(otherwise mod SQLite to use Tahoe)
+write to redis on the fly (for caching) : more dependencies
+
+Time Zone for date field?
+=========================
+
+UTC would be best and then (optionally display in the user's locale?)
+
+Kelvin for temp
+===============
+
+Should I collect from user in C or F rather than force them to enter Kelvin?
+
+Flow rate from 0 - 50
+=====================
+
+Should the upper boundary be lower?
+
+
 Choose an HTTP client for the examples
 ======================================
 
