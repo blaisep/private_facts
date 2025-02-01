@@ -78,7 +78,7 @@ def upload_string(tahoe_client, data):
 
 def get_string(tahoe_client, cap_string):
     """
-    Retrieve the contents of the string by passing the capabiltiy string to the tahoe_client.
+Retrieve the contents of the string by passing the capability string to the tahoe_client.
     """
 
     retrieved_string, status = tahoe_client.retrieve_data(cap_string)
