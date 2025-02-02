@@ -46,25 +46,8 @@ class User(BaseModel):
     birthdate: date
     dubious_characteristics: DubiousCharacteristics
 
-    def create_event(self):
-        event = Event(
-            user: self.username,
-            date: today,
-            data: {'name': Abigail,
-                 'heart_rate': 82,
-                 'blood_pressure': 110/75,
-                 'flow_rate': 0,
-                 }
-        )
 
 users: dict[str, User] = {}
-
-
-class Event(BaseModel):
-    user: username
-    date (time): datetime
-    data: dict
-
 
 
 @app.get("/",
@@ -105,3 +88,6 @@ async def delete_user(username: str) -> Response:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND) from e
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+#
+# 
+#
