@@ -1,5 +1,4 @@
 # Private facts hello world: save a string of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
-
 import sys
 import urllib3
 
@@ -8,7 +7,6 @@ import urllib3
 # You can see this by passing SHORT_TEST_STRING instead of TEST_STRING; the capability string will have a LIT instead of a CHK prefix.
 SHORT_TEST_STRING = "Hello, world!"
 TEST_STRING = "name:Abigail, heart_rate:82, bp:110/75, flow_rate:0, temp: 36.8"
-
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
 
@@ -37,7 +35,6 @@ class TahoeClient:
         return response.data.decode("utf-8")
 
     def retrieve_data(self, cap_string):
-
         response = http.request(
         "GET",
         self.base_url + cap_string
@@ -52,7 +49,6 @@ class TahoeClient:
         """
         Get the Tahoe Welcome page in json format. Inspired by meejah's magic folder tahoe client: https://github.com/tahoe-lafs/magic-folder/blob/main/src/magic_folder/tahoe_client.py
         """
-  
         try:
             response = http.request(
             "GET",
@@ -71,6 +67,7 @@ def upload_string(tahoe_client, data):
     Upload the contents of the test string via tahoe_client and return its capability string.
     """
     
+    # try:
     cap_string = tahoe_client.upload_data(data)
     if cap_string is None:
         print(f"An error occurred during upload.")
@@ -81,11 +78,10 @@ def upload_string(tahoe_client, data):
 
 def get_string(tahoe_client, cap_string):
     """
-    Retrieve the contents of the string by passing the capability string to the tahoe_client.
+Retrieve the contents of the string by passing the capability string to the tahoe_client.
     """
 
     retrieved_string, status = tahoe_client.retrieve_data(cap_string)
-
 
     if status != 200:
         print(f"An error occurred retrieving the data with error code: {status}")

@@ -19,6 +19,9 @@ dependencies = [
     "wheel>=0.45.0",
 ]
 
+[project.scripts]
+hello = "private_facts.src.hello_world.hello_world:main"
+
 [tool.hatch.build]
 exclude = [
   "packages",
