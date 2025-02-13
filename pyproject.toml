@@ -12,6 +12,7 @@ dependencies = [
     "attrs==23.2.0",
     "cryptography<42",
     "fastapi>=0.115.7",
+    "feedparser>=6.0.11",
     "httpx>=0.28.1",
     "pytest>=8.3.4",
     "sphinx>=8.1.3",
