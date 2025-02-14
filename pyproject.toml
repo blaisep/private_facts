@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.scripts]
-hello = "private_facts.src.hello_world.hello_world:main"
+hello = "private_facts.src.hello.hello_local:main"
 
 [tool.hatch.build]
 exclude = [
