@@ -1,3 +1,8 @@
+
+from fastapi.testclient import TestClient
+
+
+
 # Tests for the new facts data model:
 # tahoe
 #    Abigail    <-- dir cap
