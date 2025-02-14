@@ -1,7 +1,11 @@
+import sys
+import os
+
+print("sys.path:", sys.path)  # Debug output
 
 import pytest
 import subprocess
-from hello_world.hello_world import upload_string, get_string
+from hello.hello_local import upload_string, get_string
 
 # The key is the data to be uploaded; the value is the URI Tahoe returns.
 fake_data = {
