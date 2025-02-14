@@ -21,7 +21,8 @@ class FakeTahoe:
         return uri
 
     def retrieve_data(self, uri):
-        return self.storage.get(uri)
+        status = 200
+        return self.storage.get(uri), status
 
 # FakeTahoe tests
 def test_fake_tahoe_upload_string():
@@ -34,10 +35,12 @@ def test_fake_tahoe_upload_string():
 def test_fake_tahoe_upload_and_retrieve_string():
     fake_tahoe = FakeTahoe()
     uri = fake_tahoe.upload_data('test_string')
-    result = fake_tahoe.retrieve_data(uri)
+    result, status = fake_tahoe.retrieve_data(uri)
     expected = 'test_string'
+    expected_status = 200
     
     assert result == expected
+    assert status == expected_status
 
 # hello_world tests
 def test_upload_string(capsys):
