@@ -10,6 +10,7 @@ client = TestClient(app)
 
 @pytest.fixture()
 def basic_user():
+    pass
 
 
 def test_root_path() -> None:
