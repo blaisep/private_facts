@@ -3,6 +3,15 @@ Decision Records
 ====================
 
 
+TDD: When to write tests?
+==========================
+
+(Starting with a blank page?)
+
+
+SQLite?
+=======
+
 Read/write to to SQLite on start/exit (and write to local file for cache)
 (otherwise mod SQLite to use Tahoe)
 write to redis on the fly (for caching) : more dependencies

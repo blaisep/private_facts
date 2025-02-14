@@ -4,7 +4,8 @@ skinparam Shadowing false
 actor "User" as user
 Database "Local\nStorage" as local
 entity "Private\nFacts" as app
-Boundary "Tahoe\n'Client' " as tahoe
+entity "Tahoe Client\n(Agent)" as agent
+Boundary "Tahoe\n'Gateway'" as tahoe
 Collections "Tahoe\nStorageGrid" as disk
 
 user <-- local : "                               "
