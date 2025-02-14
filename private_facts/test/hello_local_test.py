@@ -1,8 +1,3 @@
-import sys
-import os
-
-print("sys.path:", sys.path)  # Debug output
-
 import pytest
 import subprocess
 from hello.hello_local import upload_string, get_string
