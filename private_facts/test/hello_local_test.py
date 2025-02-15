@@ -17,6 +17,8 @@ class FakeTahoe:
     def upload_data(self, data, exception=False, bad_response=False):
         if exception:
             raise ValueError("Simulated exception.")
+        if bad_response:
+            return None
         uri = fake_data.get(data) # Get the URI from the fake_data dict
         self.storage[uri] = data # Store the URI as key and the data as value for later retrieval
         return uri
@@ -38,6 +40,13 @@ def test_fake_tahoe_upload_string_exception():
     with pytest.raises(ValueError) as e:
         fake_tahoe.upload_data('test_string', exception=True)
     assert str(e.value) == 'Simulated exception.'
+
+def test_fake_tahoe_upload_string_bad_response():
+    fake_tahoe = FakeTahoe()
+    result = fake_tahoe.upload_data('test_string', bad_response=True)
+
+    assert result is None
+
 
 def test_fake_tahoe_upload_and_retrieve_string():
     fake_tahoe = FakeTahoe()
