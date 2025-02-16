@@ -71,13 +71,12 @@ def test_upload_string_happy(capsys):
     assert output == expected_output
 
 def test_upload_string_bad_response(capsys):
-    tahoe_client = FakeTahoe()
+    tahoe_client = FakeTahoe(bad_response=True)
     result = upload_string(tahoe_client, 'test_string')
-    expected = 'test_string_uri'
     output = capsys.readouterr().out.rstrip()
-    expected_output = fake_data.get('test_string')
+    expected_output = "An error occurred during upload."
 
-    assert result == expected
+    assert result is None
     assert output == expected_output
 
 def test_get_string(capsys):
