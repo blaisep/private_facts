@@ -11,13 +11,14 @@ class FakeTahoe:
     """
     An object which mocks a Tahoe client.
     """
-    def __init__(self, storage={}):
+    def __init__(self, storage={}, bad_response=False):
         self.storage = storage
+        self.bad_response = bad_response
 
-    def upload_data(self, data, exception=False, bad_response=False):
+    def upload_data(self, data, exception=False):
         if exception:
             raise ValueError("Simulated exception.")
-        if bad_response:
+        if self.bad_response:
             return None
         uri = fake_data.get(data) # Get the URI from the fake_data dict
         self.storage[uri] = data # Store the URI as key and the data as value for later retrieval
@@ -42,8 +43,8 @@ def test_fake_tahoe_upload_string_exception():
     assert str(e.value) == 'Simulated exception.'
 
 def test_fake_tahoe_upload_string_bad_response():
-    fake_tahoe = FakeTahoe()
-    result = fake_tahoe.upload_data('test_string', bad_response=True)
+    fake_tahoe = FakeTahoe(bad_response=True)
+    result = fake_tahoe.upload_data('test_string')
 
     assert result is None
 
@@ -58,8 +59,18 @@ def test_fake_tahoe_upload_and_retrieve_string():
     assert result == expected
     assert status == expected_status
 
-# hello_world tests
-def test_upload_string(capsys):
+# hello_local tests
+def test_upload_string_happy(capsys):
+    tahoe_client = FakeTahoe()
+    result = upload_string(tahoe_client, 'test_string')
+    expected = 'test_string_uri'
+    output = capsys.readouterr().out.rstrip()
+    expected_output = fake_data.get('test_string')
+
+    assert result == expected
+    assert output == expected_output
+
+def test_upload_string_bad_response(capsys):
     tahoe_client = FakeTahoe()
     result = upload_string(tahoe_client, 'test_string')
     expected = 'test_string_uri'
