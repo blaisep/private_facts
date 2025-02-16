@@ -25,6 +25,9 @@ class FakeTahoe:
         return uri
 
     def retrieve_data(self, uri):
+        if self.bad_response:
+            status = 400
+            return None, status
         status = 200
         return self.storage.get(uri), status
 
@@ -47,6 +50,24 @@ def test_fake_tahoe_upload_string_bad_response():
     result = fake_tahoe.upload_data('test_string')
 
     assert result is None
+
+def test_fake_Tahoe_retrieve_string():
+    fake_tahoe = FakeTahoe()
+    uri = fake_data.get('test_string')
+    result, status = fake_tahoe.retrieve_data(uri)
+    expected = 'test_string'
+    expected_status = 200
+
+    assert result == expected
+    assert status == expected_status
+
+def test_fake_tahoe_retrieve_string_bad_response():
+    fake_tahoe = FakeTahoe(bad_response=True)
+    uri = fake_data.get('test_string')
+    result, status = fake_tahoe.retrieve_data(uri)
+
+    assert result is None
+    assert status == 400
 
 
 def test_fake_tahoe_upload_and_retrieve_string():
@@ -83,8 +104,17 @@ def test_get_string(capsys):
     tahoe_client = FakeTahoe()
     result = get_string(tahoe_client, upload_string(tahoe_client, 'test_string'))
     expected = 'test_string'
-    output = capsys.readouterr().out.rstrip().split()[1] # Get only the second line of output, since upload_string also prints a line
+    output = capsys.readouterr().out.rstrip().split()[1] # Get only the second output, since upload_string also prints a line
     expected_output = expected
 
     assert result == expected
     assert output == expected_output
+
+def test_get_string_bad_response(capsys):
+    tahoe_client = FakeTahoe(bad_response=True)
+    result = get_string(tahoe_client, upload_string(tahoe_client, 'test_string'))
+    output = capsys.readouterr().out.rstrip().split('\n')[1] # Get only the second line of output, since upload_string also prints a line
+    expected_output = "An error occurred retrieving the data with error code: 400"
+
+    assert output == expected_output
+    assert result is None
