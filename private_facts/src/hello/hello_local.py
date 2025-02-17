@@ -1,4 +1,4 @@
-# Private facts hello world: save a string of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
+# Hello Local: save a string of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
 import sys
 import urllib3
 
@@ -78,7 +78,7 @@ def upload_string(tahoe_client, data):
 
 def get_string(tahoe_client, cap_string):
     """
-Retrieve the contents of the string by passing the capability string to the tahoe_client.
+    Retrieve the contents of the string by passing the capability string to the tahoe_client.
     """
 
     retrieved_string, status = tahoe_client.retrieve_data(cap_string)
