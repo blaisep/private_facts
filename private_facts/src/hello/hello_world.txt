@@ -1,2 +1,1 @@
-Hello, world! You now have the contents of a file stored in Tahoe-LAFS.
-
+name:Abigail, heart_rate:82, bp:110/75, flow_rate:0, temp: 36.8
