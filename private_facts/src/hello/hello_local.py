@@ -100,7 +100,7 @@ def main():
         sys.exit(1)
     cap_string = upload_string(tahoe_client, TEST_STRING)
     if cap_string is None:
-        print("Are you sure the client and storage are running and properly configured?")
+        print("No capability string retrieved; are you sure the client and storage are running and properly configured?")
         sys.exit(1)
     if get_string(tahoe_client, cap_string) is None:
         print("Are you sure the storage is running?")

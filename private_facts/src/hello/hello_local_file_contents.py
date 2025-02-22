@@ -108,7 +108,7 @@ def main():
         sys.exit(1)
     cap_string = upload_file(tahoe_client, FILEPATH)
     if cap_string is None:
-        print("Are you sure the client and storage are running and properly configured?")
+        print("No capability string retrieved; are you sure the client and storage are running and properly configured?")
         sys.exit(1)
     if get_file_contents(tahoe_client, cap_string) is None:
         print("Are you sure the storage is running?")
