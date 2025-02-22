@@ -5,7 +5,7 @@ import urllib3
 
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
-FILEPATH = Path("./private_facts/src/hello/hello_world.txt")
+FILEPATH = Path("./private_facts/src/hello/hello_world_in.txt")
 
 http = urllib3.PoolManager()
 
@@ -69,6 +69,7 @@ def upload_file(tahoe_client, file_path):
     try:
         with open(file_path, "rb") as f: 
             cap_string = tahoe_client.upload_data(f)
+
 
         if cap_string is None:
             print(f"An error occurred during upload.")
