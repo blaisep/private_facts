@@ -1,4 +1,5 @@
-# Hello Local File: save a txt file of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve the contents.
+# Hello Local File: save an input txt file of personal data to a locally running Tahoe storage server using a Tahoe client,
+# then retrieve the contents and write them to an output txt file.
 from pathlib import Path
 import sys
 import urllib3
@@ -9,6 +10,7 @@ from urllib3.filepost import encode_multipart_formdata
 BASE_URL="http://127.0.0.1:3456/uri/"
 # FILEPATH points to hello_world_in.txt, which contains the same string used in the hello_local module.
 FILEPATH = Path("./private_facts/src/hello/hello_world_in.txt")
+OUTPUT_FILEPATH = Path("./private_facts/src/hello/hello_world_out.txt")
 http = urllib3.PoolManager()
 
 class TahoeClient:
@@ -27,7 +29,7 @@ class TahoeClient:
                 "file": (file_path.name, file_data, "application/octet-stream")
             }
             body, content_type = encode_multipart_formdata(fields)
-            headers = {"Content-Type": content_type, "Accept": "application/json"}
+            headers = {"Content-Type": content_type}
             response = http.request("PUT", self.base_url, body=body, headers=headers)
 
         except Exception as e:
@@ -69,7 +71,7 @@ tahoe_client = TahoeClient(base_url=BASE_URL)
 
 def upload_file(tahoe_client, file_path):
     """
-    Upload the contents of the test file via tahoe_client and return its capability string.
+    Upload the input file via tahoe_client and return its capability string.
     """
     try:
         cap_string = tahoe_client.upload_file(file_path)
@@ -80,27 +82,36 @@ def upload_file(tahoe_client, file_path):
 
         print(cap_string)
         return cap_string
-    
 
     except FileNotFoundError:
         print(f"File {file_path} not found.")
         return None
+
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
 
-def get_file(tahoe_client, cap_string):
+def get_file(tahoe_client, cap_string, output_path):
     """
-    Retrieve the contents of the file by passing the capability string to the tahoe_client.
+    Retrieve the contents of a file by passing the capability string to the tahoe_client and write them to output_path.
     """
-
     retrieved_data, status = tahoe_client.retrieve_data(cap_string)
 
     if status != 200:
         print(f"An error occurred retrieving the data with error code: {status}")
         return None
 
+    # Separate the data from the metadata
+    retrieved_data = retrieved_data.split("\n")[4]
     print(retrieved_data)
+
+    try:
+        with open(output_path, "w") as f:
+            f.write(retrieved_data)
+        print(f"Data written to {OUTPUT_FILEPATH}.")
+    except Exception as e:
+        print(f"Error writing data to {OUTPUT_FILEPATH}.")
+
     return retrieved_data
 
 
@@ -114,7 +125,7 @@ def main():
     if cap_string is None:
         print("No capability string retrieved; are you sure the client and storage are running and properly configured?")
         sys.exit(1)
-    if get_file(tahoe_client, cap_string) is None:
+    if get_file(tahoe_client, cap_string, OUTPUT_FILEPATH) is None:
         print("Are you sure the storage is running?")
         sys.exit(1)
 
