@@ -1,2 +1,0 @@
-Hello, world! You now have the contents of a file stored in Tahoe-LAFS.
-
