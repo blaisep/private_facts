@@ -1,4 +1,4 @@
-# Hello Local: save a string of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
+# Hello Local Filesystem: Create a Tahoe directory, save a string of personal data to it, then retrieve it.
 import sys
 import urllib3
 
@@ -21,7 +21,7 @@ class TahoeClient:
 
     def upload_data(self, data, dir_cap=None):
         if dir_cap:
-            url = self.base_url + dir_cap + "/foo.txt"
+            url = self.base_url + dir_cap + "/my_data.txt"
         else:
             url = self.base_url
         try:
@@ -38,10 +38,15 @@ class TahoeClient:
 
         return response.data.decode("utf-8")
 
-    def retrieve_data(self, cap_string):
+    def retrieve_data(self, cap_string, dir_cap=None):
+        if dir_cap:
+            url = self.base_url + dir_cap + "/my_data.txt"
+        else:
+            url = self.base_url + cap_string
+
         response = http.request(
         "GET",
-        self.base_url + cap_string
+        url
         )
 
         if response.status != 200:
@@ -49,22 +54,7 @@ class TahoeClient:
 
         return response.data.decode("utf-8"), response.status
     
-    def put_using_filecap(self, cap_string):
-        """
-        According to docs this only works for a writecap on a mutable file.
-        """
-        try:
-            response = http.request(
-            "PUT",
-            self.base_url+cap_string,
-            )
-        except Exception:
-            raise
-
-        if response.status != 200:
-            return None
-
-        return response.data.decode("utf-8")
+    
 
     def make_dir(self):
         try:
@@ -102,35 +92,35 @@ def upload_string(tahoe_client, data, dir_cap=None):
     """
     Upload the contents of the test string via tahoe_client and return its capability string.
     """
-    if dir_cap:
-        cap_string = tahoe_client.upload_data(data, dir_cap=dir_cap)
-    else:
-        cap_string = tahoe_client.upload_data(data)
-    breakpoint()
+    cap_string = tahoe_client.upload_data(data, dir_cap)
+
     if cap_string is None:
         print(f"An error occurred during upload.")
         return None
     
-    print(cap_string)
+    print(f"Data cap string: {cap_string}")
     return cap_string
 
-def get_string(tahoe_client, cap_string):
+def get_string(tahoe_client, cap_string, dir_cap=None):
     """
     Retrieve the contents of the string by passing the capability string to the tahoe_client.
     """
-
-    retrieved_string, status = tahoe_client.retrieve_data(cap_string)
+    retrieved_string, status = tahoe_client.retrieve_data(cap_string, dir_cap)
 
     if status != 200:
         print(f"An error occurred retrieving the data with error code: {status}")
         return None
 
 
-    print(retrieved_string)
+    print(f"Retrieved data: {retrieved_string}")
     return retrieved_string
 
-def upload_using_filecap(tahoe_client, cap_string):
-    return tahoe_client.put_using_filecap(cap_string)
+
+
+def create_directory(tahoe_client):
+    dir_cap = tahoe_client.make_dir()
+    print(f"Directory cap string: {dir_cap}")
+    return dir_cap
 
 def main():
     try:
@@ -138,15 +128,17 @@ def main():
     except Exception:
         print("Cannot access Tahoe welcome page. Are you sure the client is running?")
         sys.exit(1)
-    new_dir = tahoe_client.make_dir()
-    dir_string = upload_string(tahoe_client, TEST_STRING, new_dir)
-    # cap_string = upload_string(tahoe_client, TEST_STRING)
-    # if cap_string is None:
-    #     print("No capability string retrieved; are you sure the client and storage are running and properly configured?")
-    #     sys.exit(1)
-    # if get_string(tahoe_client, cap_string) is None:
-    #     print("Are you sure the storage is running?")
-    #     sys.exit(1)
+    dir_cap = create_directory(tahoe_client)
+    if dir_cap is None:
+        print("Could not create directory.")
+        sys.exit(1)
+    cap_string = upload_string(tahoe_client, TEST_STRING, dir_cap)
+    if cap_string is None:
+        print("No capability string retrieved; are you sure the client and storage are running and properly configured?")
+        sys.exit(1)
+    if get_string(tahoe_client, cap_string) is None:
+        print("Are you sure the storage is running?")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
