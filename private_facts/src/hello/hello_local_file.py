@@ -21,19 +21,18 @@ class TahoeClient:
         self.base_url = base_url
 
 
-    def upload_file(self, file_path):
+    def upload_data(self, data):
         try:
-            with open(file_path, "rb") as f:
-                file_data = f.read()
-            fields = {
-                "file": (file_path.name, file_data, "application/octet-stream")
-            }
-            body, content_type = encode_multipart_formdata(fields)
-            headers = {"Content-Type": content_type}
-            response = http.request("PUT", self.base_url, body=body, headers=headers)
-
-        except Exception as e:
-            raise RuntimeError(f"Upload failed: {e}")
+            if hasattr(data, "read"):
+                data = data.read()
+            response = http.request(
+            "PUT",
+      
+            self.base_url,
+            data
+            )
+        except Exception:
+            raise
 
         if response.status != 200:
             return None
@@ -74,7 +73,9 @@ def upload_file(tahoe_client, file_path):
     Upload the input file via tahoe_client and return its capability string.
     """
     try:
-        cap_string = tahoe_client.upload_file(file_path)
+        # cap_string = tahoe_client.upload_data(file_path)
+        with open(file_path, "rb") as f: 
+            cap_string = tahoe_client.upload_data(f)
 
         if cap_string is None:
             print(f"An error occurred during upload.")
@@ -88,7 +89,7 @@ def upload_file(tahoe_client, file_path):
         return None
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred during upload: {e}")
         return None
 
 def get_file(tahoe_client, cap_string, output_path):
@@ -102,7 +103,6 @@ def get_file(tahoe_client, cap_string, output_path):
         return None
 
     # Separate the data from the metadata
-    retrieved_data = retrieved_data.split("\n")[4]
     print(retrieved_data)
 
     try:
