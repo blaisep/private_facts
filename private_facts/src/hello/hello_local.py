@@ -73,7 +73,7 @@ def upload_string(tahoe_client, data):
         print(f"An error occurred during upload.")
         return None
     
-    print(cap_string)
+    print(f"Capability string: {cap_string}")
     return cap_string
 
 def get_string(tahoe_client, cap_string):
@@ -88,7 +88,7 @@ def get_string(tahoe_client, cap_string):
         return None
 
 
-    print(retrieved_string)
+    print(f"Retrieved data: {retrieved_string}")
     return retrieved_string
 
 

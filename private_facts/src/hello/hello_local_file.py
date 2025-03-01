@@ -79,7 +79,7 @@ def upload_file(tahoe_client, file_path):
             print(f"An error occurred during upload.")
             return None
 
-        print(cap_string)
+        print(f"Capability string: {cap_string}")
         return cap_string
 
     except FileNotFoundError:
@@ -100,7 +100,7 @@ def get_file(tahoe_client, cap_string, output_path):
         print(f"An error occurred retrieving the data with error code: {status}")
         return None
 
-    print(retrieved_data)
+    print(f"Retrieved data: {retrieved_data}")
 
     try:
         with open(output_path, "w") as f:
