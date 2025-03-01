@@ -3,7 +3,6 @@
 from pathlib import Path
 import sys
 import urllib3
-from urllib3.filepost import encode_multipart_formdata
 
 
 # By default, the Tahoe client listens on port 3456 of the local host.
@@ -73,7 +72,6 @@ def upload_file(tahoe_client, file_path):
     Upload the input file via tahoe_client and return its capability string.
     """
     try:
-        # cap_string = tahoe_client.upload_data(file_path)
         with open(file_path, "rb") as f: 
             cap_string = tahoe_client.upload_data(f)
 
@@ -102,7 +100,6 @@ def get_file(tahoe_client, cap_string, output_path):
         print(f"An error occurred retrieving the data with error code: {status}")
         return None
 
-    # Separate the data from the metadata
     print(retrieved_data)
 
     try:
@@ -110,7 +107,7 @@ def get_file(tahoe_client, cap_string, output_path):
             f.write(retrieved_data)
         print(f"Data written to {OUTPUT_FILEPATH}.")
     except Exception as e:
-        print(f"Error writing data to {OUTPUT_FILEPATH}.")
+        print(f"Error writing data to {OUTPUT_FILEPATH}: {e}.")
 
     return retrieved_data
 
