@@ -19,8 +19,7 @@ def upload_string(tahoe_client, data):
     """
     Upload the contents of the test string via tahoe_client and return its capability string.
     """
-    
-    # try:
+
     cap_string = tahoe_client.upload_data(data)
     if cap_string is None:
         print(f"An error occurred during upload.")

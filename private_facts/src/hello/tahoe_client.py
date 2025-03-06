@@ -11,15 +11,19 @@ class TahoeClient:
             url = self.base_url + dir_cap + "/my_data.txt"
         else:
             url = self.base_url
+        
         try:
+            if hasattr(data, "read"):
+                data = data.read()
             response = self.http.request(
             "PUT",
+      
             url,
             data
             )
         except Exception:
             raise
-            
+
         if response.status != 200 and response.status != 201:
             return None
 
