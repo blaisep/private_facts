@@ -4,68 +4,16 @@ from pathlib import Path
 import sys
 import urllib3
 
+from .tahoe_client import TahoeClient
 
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
 # FILEPATH points to hello_world_in.txt, which contains the same string used in the hello_local module.
 FILEPATH = Path("./private_facts/src/hello/hello_world_in.txt")
 OUTPUT_FILEPATH = Path("./private_facts/src/hello/hello_world_out.txt")
-http = urllib3.PoolManager()
+HTTP = urllib3.PoolManager()
 
-class TahoeClient:
-    """
-    The TahoeClient object makes requests to and returns responses from a locally running Tahoe client.
-    """
-    def __init__(self, base_url):
-        self.base_url = base_url
-
-
-    def upload_data(self, data):
-        try:
-            if hasattr(data, "read"):
-                data = data.read()
-            response = http.request(
-            "PUT",
-      
-            self.base_url,
-            data
-            )
-        except Exception:
-            raise
-
-        if response.status != 200:
-            return None
-
-        return response.data.decode("utf-8")
-
-
-    def retrieve_data(self, cap_string):
-        response = http.request(
-        "GET",
-        self.base_url + cap_string
-        )
-
-        if response.status != 200:
-            return None, response.status
-
-        return response.data.decode("utf-8"), response.status
-    
-    def get_welcome(self):
-        """
-        Get the Tahoe Welcome page in json format. Inspired by meejah's magic folder tahoe client: https://github.com/tahoe-lafs/magic-folder/blob/main/src/magic_folder/tahoe_client.py
-        """
-        try:
-            response = http.request(
-            "GET",
-            "http://127.0.0.1:3456/?t=json"
-            )
-        except Exception:
-            raise
-
-        return response
-
-tahoe_client = TahoeClient(base_url=BASE_URL)
-
+tahoe_client = TahoeClient(base_url=BASE_URL, http=HTTP)
 
 def upload_file(tahoe_client, file_path):
     """
