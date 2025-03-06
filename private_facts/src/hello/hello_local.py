@@ -2,6 +2,7 @@
 import sys
 import urllib3
 
+from .tahoe_client import TahoeClient
 
 # If the string passed in is under a certain number of bytes, it will be encoded in the URL rather than stored in the server.
 # You can see this by passing SHORT_TEST_STRING instead of TEST_STRING; the capability string will have a LIT instead of a CHK prefix.
@@ -9,57 +10,9 @@ SHORT_TEST_STRING = "Hello, world!"
 TEST_STRING = "name:Abigail, heart_rate:82, bp:110/75, flow_rate:0, temp: 36.8"
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
+HTTP = urllib3.PoolManager()
 
-http = urllib3.PoolManager()
-
-class TahoeClient:
-    """
-    The TahoeClient object makes requests to and returns responses from a locally running Tahoe client.
-    """
-    def __init__(self, base_url):
-        self.base_url = base_url
-
-    def upload_data(self, data):
-        try:
-            response = http.request(
-            "PUT",
-            self.base_url,
-            data
-            )
-        except Exception:
-            raise
-
-        if response.status != 200:
-            return None
-
-        return response.data.decode("utf-8")
-
-    def retrieve_data(self, cap_string):
-        response = http.request(
-        "GET",
-        self.base_url + cap_string
-        )
-
-        if response.status != 200:
-            return None, response.status
-
-        return response.data.decode("utf-8"), response.status
-    
-    def get_welcome(self):
-        """
-        Get the Tahoe Welcome page in json format. Inspired by meejah's magic folder tahoe client: https://github.com/tahoe-lafs/magic-folder/blob/main/src/magic_folder/tahoe_client.py
-        """
-        try:
-            response = http.request(
-            "GET",
-            "http://127.0.0.1:3456/?t=json"
-            )
-        except Exception:
-            raise
-
-        return response
-
-tahoe_client = TahoeClient(base_url=BASE_URL)
+tahoe_client = TahoeClient(base_url=BASE_URL, http=HTTP)
 
 
 def upload_string(tahoe_client, data):
