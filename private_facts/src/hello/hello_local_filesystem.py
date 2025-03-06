@@ -2,6 +2,7 @@
 import sys
 import urllib3
 
+from .tahoe_client import TahoeClient
 
 # If the string passed in is under a certain number of bytes, it will be encoded in the URL rather than stored in the server.
 # You can see this by passing SHORT_TEST_STRING instead of TEST_STRING; the capability string will have a LIT instead of a CHK prefix.
@@ -9,84 +10,9 @@ SHORT_TEST_STRING = "Hello, world!"
 TEST_STRING = "name:Abigail, heart_rate:82, bp:110/75, flow_rate:0, temp: 36.8"
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
+HTTP = urllib3.PoolManager()
 
-http = urllib3.PoolManager()
-
-class TahoeClient:
-    """
-    The TahoeClient object makes requests to and returns responses from a locally running Tahoe client.
-    """
-    def __init__(self, base_url):
-        self.base_url = base_url
-
-    def upload_data(self, data, dir_cap=None):
-        if dir_cap:
-            url = self.base_url + dir_cap + "/my_data.txt"
-        else:
-            url = self.base_url
-        try:
-            response = http.request(
-            "PUT",
-            url,
-            data
-            )
-        except Exception:
-            raise
-            
-        if response.status != 200 and response.status != 201:
-            return None
-
-        return response.data.decode("utf-8")
-
-    def retrieve_data(self, cap_string, dir_cap=None):
-        if dir_cap:
-            url = self.base_url + dir_cap + "/my_data.txt"
-        else:
-            url = self.base_url + cap_string
-
-        response = http.request(
-        "GET",
-        url
-        )
-
-        if response.status != 200:
-            return None, response.status
-
-        return response.data.decode("utf-8"), response.status
-    
-    
-
-    def make_dir(self):
-        try:
-            response = http.request(
-                "POST",
-                self.base_url[:-1]+"?t=mkdir"
-            )
-        except Exception:
-            raise
-
-        if response.status != 200:
-            return None
-
-        return response.data.decode("utf-8")
-
-
-    def get_welcome(self):
-        """
-        Get the Tahoe Welcome page in json format. Inspired by meejah's magic folder tahoe client: https://github.com/tahoe-lafs/magic-folder/blob/main/src/magic_folder/tahoe_client.py
-        """
-        try:
-            response = http.request(
-            "GET",
-            "http://127.0.0.1:3456/?t=json"
-            )
-        except Exception:
-            raise
-
-        return response
-
-tahoe_client = TahoeClient(base_url=BASE_URL)
-
+tahoe_client = TahoeClient(base_url=BASE_URL, http=HTTP)
 
 def upload_string(tahoe_client, data, dir_cap=None):
     """
