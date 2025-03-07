@@ -86,7 +86,7 @@ def test_upload_string_happy(capsys):
     result = upload_string(tahoe_client, 'test_string')
     expected = 'test_string_uri'
     output = capsys.readouterr().out.rstrip()
-    expected_output = fake_data.get('test_string')
+    expected_output = f"Capability string: {fake_data.get('test_string')}"
 
     assert result == expected
     assert output == expected_output
@@ -104,8 +104,8 @@ def test_get_string(capsys):
     tahoe_client = FakeTahoe()
     result = get_string(tahoe_client, upload_string(tahoe_client, 'test_string'))
     expected = 'test_string'
-    output = capsys.readouterr().out.rstrip().split()[1] # Get only the second output, since upload_string also prints a line
-    expected_output = expected
+    output = capsys.readouterr().out.rstrip().split('\n')[1] # Get only the second line of output, since upload_string also prints a line
+    expected_output = f"Retrieved data: {expected}"
 
     assert result == expected
     assert output == expected_output
