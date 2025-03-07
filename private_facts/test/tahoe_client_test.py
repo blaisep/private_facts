@@ -17,9 +17,14 @@ def test_create_client_happy(client, mock_http):
     assert client.base_url == BASE_URL
     assert client.http is mock_http
     
-
 def test_create_client_no_url(mock_http):
-    # client = TahoeClient(mock_http)
+    with pytest.raises(TypeError) as e:
+        client = TahoeClient(mock_http)
+    
+    error_message = str(e.value)
+
+    assert "missing 1 required positional argument" in error_message
+    assert "http" in error_message
 
 def test_create_client_no_http():
     pass
