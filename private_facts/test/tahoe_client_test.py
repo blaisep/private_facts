@@ -27,8 +27,14 @@ def test_create_client_no_url(mock_http):
     assert "http" in error_message
 
 def test_create_client_no_http():
-    pass
+    with pytest.raises(TypeError) as e:
+        client = TahoeClient(BASE_URL)
+    
+    error_message = str(e.value)
 
+    assert "missing 1 required positional argument" in error_message
+    assert "http" in error_message
+    
 # Upload data tests
 
 # Retrieve data tests
