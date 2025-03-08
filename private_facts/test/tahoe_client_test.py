@@ -161,6 +161,15 @@ def test_retrieve_data_bad_response(client, mock_http):
     assert result[0] is None
     assert result[1] == 404
 
+def test_retrieve_data_dircap_happy(client, mock_http):
+    mock_response = Mock(status=200, data=b"test data")
+    mock_http.request.return_value = mock_response
+
+    result = client.retrieve_data("cap_string", dir_cap="$DIRCAP")
+
+    mock_http.request.assert_called_once_with("GET", BASE_URL+"$DIRCAP/my_data.txt")
+    assert result[0] == "test data"
+    assert result[1] == 200
 
 # Make dir tests
 
