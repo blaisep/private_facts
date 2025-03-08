@@ -100,6 +100,15 @@ def test_upload_data_file_happy(client, mock_http, data_file):
     mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
     assert result == "cap_string"
 
+def test_upload_data_file_bad_response(client, mock_http, data_file):
+    mock_response = Mock(status=404)
+    mock_http.request.return_value = mock_response
+
+    result = client.upload_data(data_file)
+
+    data_file.read.assert_called_once()
+    mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
+    assert result is None
 
 
 # Retrieve data tests
