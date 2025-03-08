@@ -125,6 +125,15 @@ def test_upload_data_file_dircap_happy(client, mock_http, data_file):
     mock_http.request.assert_called_once_with("PUT", BASE_URL+"$DIRCAP"+"/my_data.txt", "test data")
     assert result == "cap_string"
 
+def test_upload_data_file_dircap_bad_response(client, mock_http, data_file):
+    mock_response = Mock(status=404)
+    mock_http.request.return_value = mock_response
+    
+    result = client.upload_data(data_file, dir_cap="$DIRCAP")
+
+    mock_http.request.assert_called_once_with("PUT", BASE_URL+"$DIRCAP"+"/my_data.txt", "test data")
+    assert result is None
+
 # Retrieve data tests
 def test_retrieve_data_happy(client, mock_http):
     mock_response = Mock(status=200, data=b"test data")
