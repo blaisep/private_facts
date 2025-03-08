@@ -64,7 +64,14 @@ def test_upload_data_exception(client, mock_http):
     with pytest.raises(Exception):
         client.upload_data("test data")
 
+def test_upload_data_dircap(client, mock_http):
+    mock_response = Mock(status=200, data=b"cap_string")
+    mock_http.request.return_value = mock_response
 
+    result = client.upload_data("test data", dir_cap="$DIRCAP")
+
+    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456/$DIRCAP/my_data.txt", "test data")
+    assert result == "cap_string"
 
 # Retrieve data tests
 def test_retrieve_data_happy(client, mock_http):
