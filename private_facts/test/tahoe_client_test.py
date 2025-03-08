@@ -1,12 +1,12 @@
 import pytest
-from unittest.mock import MagicMock
+from unittest.mock import Mock
 from hello.tahoe_client import TahoeClient
 
 BASE_URL="http://127.0.0.1:3456/"
 
 @pytest.fixture
 def mock_http():
-    return MagicMock()
+    return Mock()
 
 @pytest.fixture
 def client(mock_http):
@@ -37,7 +37,7 @@ def test_create_client_no_http():
 
 # Upload data tests
 def test_upload_data_happy(client, mock_http):
-    mock_response = MagicMock(status=200, data=b"cap_string")
+    mock_response = Mock(status=200, data=b"cap_string")
     mock_http.request.return_value = mock_response
 
     result = client.upload_data("test data")
@@ -46,7 +46,7 @@ def test_upload_data_happy(client, mock_http):
     assert result == "cap_string"
 
 def test_upload_data_bad_response(client, mock_http):
-    mock_response = MagicMock(status=404)
+    mock_response = Mock(status=404)
     mock_http.request.return_value = mock_response
     
     result = client.upload_data("test data")
@@ -56,7 +56,7 @@ def test_upload_data_bad_response(client, mock_http):
 
 # Retrieve data tests
 def test_retrieve_data_happy(client, mock_http):
-    mock_response = MagicMock(status=200, data=b"test data")
+    mock_response = Mock(status=200, data=b"test data")
     mock_http.request.return_value = mock_response
 
     result = client.retrieve_data("cap_string")
@@ -64,6 +64,16 @@ def test_retrieve_data_happy(client, mock_http):
     mock_http.request.assert_called_once_with("GET", "http://127.0.0.1:3456/cap_string")
     assert result[0] == "test data"
     assert result[1] == 200
+
+def test_retrieve_data_bad_response(client, mock_http):
+    mock_response = Mock(status=404)
+    mock_http.request.return_value = mock_response
+
+    result = client.retrieve_data("cap_string")
+
+    mock_http.request.assert_called_once_with("GET", "http://127.0.0.1:3456/cap_string")
+    assert result[0] is None
+    assert result[1] == 404
 
 
 # Make dir tests
