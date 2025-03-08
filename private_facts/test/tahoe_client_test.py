@@ -12,6 +12,10 @@ def mock_http():
 def client(mock_http):
     return TahoeClient(base_url=BASE_URL, http=mock_http)
 
+@pytest.fixture
+def client_dircap(mock_http):
+    return TahoeClient(base_url=BASE_URL, http=mock_http, dir_cap="$DIRCAP")
+
 # Client creation tests
 def test_create_client_happy(client, mock_http):
     assert client.base_url == BASE_URL
@@ -59,6 +63,8 @@ def test_upload_data_exception(client, mock_http):
     
     with pytest.raises(Exception):
         client.upload_data("test data")
+
+
 
 # Retrieve data tests
 def test_retrieve_data_happy(client, mock_http):
