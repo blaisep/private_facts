@@ -110,6 +110,12 @@ def test_upload_data_file_bad_response(client, mock_http, data_file):
     mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
     assert result is None
 
+def test_upload_data_file_exception(client, mock_http, data_file):
+    mock_http.request.side_effect = Exception()
+    
+    with pytest.raises(Exception):
+        client.upload_data(data_file)
+
 
 # Retrieve data tests
 def test_retrieve_data_happy(client, mock_http):
