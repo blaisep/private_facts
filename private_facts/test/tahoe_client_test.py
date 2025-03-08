@@ -42,7 +42,7 @@ def test_upload_data_happy(client, mock_http):
 
     result = client.upload_data("test data")
 
-    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456/", "test data")
+    mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
     assert result == "cap_string"
 
 def test_upload_data_bad_response(client, mock_http):
@@ -51,7 +51,7 @@ def test_upload_data_bad_response(client, mock_http):
     
     result = client.upload_data("test data")
 
-    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456/", "test data")
+    mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
     assert result is None
 
 def test_upload_data_exception(client, mock_http):
@@ -66,7 +66,7 @@ def test_upload_data_dircap_happy(client, mock_http):
 
     result = client.upload_data("test data", dir_cap="$DIRCAP")
 
-    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456/$DIRCAP/my_data.txt", "test data")
+    mock_http.request.assert_called_once_with("PUT", BASE_URL+"$DIRCAP"+"/my_data.txt", "test data")
     assert result == "cap_string"
 
 def test_upload_data_dircap_bad_response(client, mock_http):
@@ -75,7 +75,7 @@ def test_upload_data_dircap_bad_response(client, mock_http):
     
     result = client.upload_data("test data", dir_cap="$DIRCAP")
 
-    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456/$DIRCAP/my_data.txt", "test data")
+    mock_http.request.assert_called_once_with("PUT", BASE_URL+"$DIRCAP"+"/my_data.txt", "test data")
     assert result is None
 
 def test_upload_data_dircap_exception(client, mock_http):
@@ -93,7 +93,7 @@ def test_upload_data_file_happy(client, mock_http):
     result = client.upload_data(data_file)
 
     data_file.read.assert_called_once()
-    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456/", "test data")
+    mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
     assert result == "cap_string"
 
 
@@ -105,7 +105,7 @@ def test_retrieve_data_happy(client, mock_http):
 
     result = client.retrieve_data("cap_string")
 
-    mock_http.request.assert_called_once_with("GET", "http://127.0.0.1:3456/cap_string")
+    mock_http.request.assert_called_once_with("GET", BASE_URL+"cap_string")
     assert result[0] == "test data"
     assert result[1] == 200
 
@@ -115,7 +115,7 @@ def test_retrieve_data_bad_response(client, mock_http):
 
     result = client.retrieve_data("cap_string")
 
-    mock_http.request.assert_called_once_with("GET", "http://127.0.0.1:3456/cap_string")
+    mock_http.request.assert_called_once_with("GET", BASE_URL+"cap_string")
     assert result[0] is None
     assert result[1] == 404
 
