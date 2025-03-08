@@ -34,8 +34,16 @@ def test_create_client_no_http():
 
     assert "missing 1 required positional argument" in error_message
     assert "http" in error_message
-    
+
 # Upload data tests
+def test_upload_data_happy(client, mock_http):
+    mock_response = MagicMock(status=200, data=b"Upload successful")
+    mock_http.request.return_value = mock_response
+
+    result = client.upload_data("test data")
+
+    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456", "test data")
+    assert result == "Upload successful"
 
 # Retrieve data tests
 
