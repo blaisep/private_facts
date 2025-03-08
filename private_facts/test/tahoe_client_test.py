@@ -54,6 +54,12 @@ def test_upload_data_bad_response(client, mock_http):
     mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456/", "test data")
     assert result is None
 
+def test_upload_data_exception(client, mock_http):
+    mock_http.request.side_effect = Exception()
+    
+    with pytest.raises(Exception):
+        client.upload_data("test data")
+
 # Retrieve data tests
 def test_retrieve_data_happy(client, mock_http):
     mock_response = Mock(status=200, data=b"test data")
