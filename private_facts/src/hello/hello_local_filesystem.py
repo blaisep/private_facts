@@ -1,4 +1,4 @@
-# Hello Local: save a string of personal data to a locally running Tahoe storage server using a Tahoe client, then retrieve it.
+# Hello Local Filesystem: Create a Tahoe directory, save a string of personal data to it, then retrieve it.
 import sys
 import urllib3
 
@@ -14,26 +14,24 @@ HTTP = urllib3.PoolManager()
 
 tahoe_client = TahoeClient(base_url=BASE_URL, http=HTTP)
 
-
-def upload_string(tahoe_client, data):
+def upload_string(tahoe_client, data, dir_cap=None):
     """
     Upload the contents of the test string via tahoe_client and return its capability string.
     """
+    cap_string = tahoe_client.upload_data(data, dir_cap)
 
-    cap_string = tahoe_client.upload_data(data)
     if cap_string is None:
         print(f"An error occurred during upload.")
         return None
     
-    print(f"Capability string: {cap_string}")
+    print(f"Data cap string: {cap_string}")
     return cap_string
 
-def get_string(tahoe_client, cap_string):
+def get_string(tahoe_client, cap_string, dir_cap=None):
     """
     Retrieve the contents of the string by passing the capability string to the tahoe_client.
     """
-
-    retrieved_string, status = tahoe_client.retrieve_data(cap_string)
+    retrieved_string, status = tahoe_client.retrieve_data(cap_string, dir_cap)
 
     if status != 200:
         print(f"An error occurred retrieving the data with error code: {status}")
@@ -44,13 +42,23 @@ def get_string(tahoe_client, cap_string):
     return retrieved_string
 
 
+
+def create_directory(tahoe_client):
+    dir_cap = tahoe_client.make_dir()
+    print(f"Directory cap string: {dir_cap}")
+    return dir_cap
+
 def main():
     try:
         tahoe_client.get_welcome()
     except Exception:
         print("Cannot access Tahoe welcome page. Are you sure the client is running?")
         sys.exit(1)
-    cap_string = upload_string(tahoe_client, TEST_STRING)
+    dir_cap = create_directory(tahoe_client)
+    if dir_cap is None:
+        print("Could not create directory.")
+        sys.exit(1)
+    cap_string = upload_string(tahoe_client, TEST_STRING, dir_cap)
     if cap_string is None:
         print("No capability string retrieved; are you sure the client and storage are running and properly configured?")
         sys.exit(1)

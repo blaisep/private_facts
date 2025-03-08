@@ -3,84 +3,31 @@
 from pathlib import Path
 import sys
 import urllib3
-from urllib3.filepost import encode_multipart_formdata
 
+from .tahoe_client import TahoeClient
 
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"
 # FILEPATH points to hello_world_in.txt, which contains the same string used in the hello_local module.
 FILEPATH = Path("./private_facts/src/hello/hello_world_in.txt")
 OUTPUT_FILEPATH = Path("./private_facts/src/hello/hello_world_out.txt")
-http = urllib3.PoolManager()
+HTTP = urllib3.PoolManager()
 
-class TahoeClient:
-    """
-    The TahoeClient object makes requests to and returns responses from a locally running Tahoe client.
-    """
-    def __init__(self, base_url):
-        self.base_url = base_url
-
-
-    def upload_file(self, file_path):
-        try:
-            with open(file_path, "rb") as f:
-                file_data = f.read()
-            fields = {
-                "file": (file_path.name, file_data, "application/octet-stream")
-            }
-            body, content_type = encode_multipart_formdata(fields)
-            headers = {"Content-Type": content_type}
-            response = http.request("PUT", self.base_url, body=body, headers=headers)
-
-        except Exception as e:
-            raise RuntimeError(f"Upload failed: {e}")
-
-        if response.status != 200:
-            return None
-
-        return response.data.decode("utf-8")
-
-
-    def retrieve_data(self, cap_string):
-        response = http.request(
-        "GET",
-        self.base_url + cap_string
-        )
-
-        if response.status != 200:
-            return None, response.status
-
-        return response.data.decode("utf-8"), response.status
-    
-    def get_welcome(self):
-        """
-        Get the Tahoe Welcome page in json format. Inspired by meejah's magic folder tahoe client: https://github.com/tahoe-lafs/magic-folder/blob/main/src/magic_folder/tahoe_client.py
-        """
-        try:
-            response = http.request(
-            "GET",
-            "http://127.0.0.1:3456/?t=json"
-            )
-        except Exception:
-            raise
-
-        return response
-
-tahoe_client = TahoeClient(base_url=BASE_URL)
-
+tahoe_client = TahoeClient(base_url=BASE_URL, http=HTTP)
 
 def upload_file(tahoe_client, file_path):
     """
     Upload the input file via tahoe_client and return its capability string.
     """
     try:
-        cap_string = tahoe_client.upload_file(file_path)
+        with open(file_path, "rb") as f: 
+            cap_string = tahoe_client.upload_data(f)
 
         if cap_string is None:
             print(f"An error occurred during upload.")
             return None
 
-        print(cap_string)
+        print(f"Capability string: {cap_string}")
         return cap_string
 
     except FileNotFoundError:
@@ -88,7 +35,7 @@ def upload_file(tahoe_client, file_path):
         return None
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred during upload: {e}")
         return None
 
 def get_file(tahoe_client, cap_string, output_path):
@@ -101,16 +48,14 @@ def get_file(tahoe_client, cap_string, output_path):
         print(f"An error occurred retrieving the data with error code: {status}")
         return None
 
-    # Separate the data from the metadata
-    retrieved_data = retrieved_data.split("\n")[4]
-    print(retrieved_data)
+    print(f"Retrieved data: {retrieved_data}")
 
     try:
         with open(output_path, "w") as f:
             f.write(retrieved_data)
         print(f"Data written to {OUTPUT_FILEPATH}.")
     except Exception as e:
-        print(f"Error writing data to {OUTPUT_FILEPATH}.")
+        print(f"Error writing data to {OUTPUT_FILEPATH}: {e}.")
 
     return retrieved_data
 
