@@ -45,6 +45,14 @@ def test_upload_data_happy(client, mock_http):
     mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456", "test data")
     assert result == "Upload successful"
 
+def test_upload_data_bad_response(client, mock_http):
+    mock_response = MagicMock(status=404)
+    mock_http.request.return_value = mock_response
+    
+    result = client.upload_data("test data")
+
+    mock_http.request.assert_called_once_with("PUT", "http://127.0.0.1:3456", "test data")
+    assert result is None
 # Retrieve data tests
 
 # Make dir tests
