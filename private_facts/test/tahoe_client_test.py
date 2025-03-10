@@ -191,4 +191,14 @@ def test_make_dir_happy(client, mock_http):
     mock_http.request.assert_called_once_with("POST", BASE_URL[:-1]+"?t=mkdir")
     assert result == "$DIRCAP"
 
+def test_make_dir_bad_response(client, mock_http):
+    mock_response = Mock(status=404)
+    mock_http.request.return_value = mock_response
+
+    result = client.make_dir()
+
+    mock_http.request.assert_called_once_with("POST", BASE_URL[:-1]+"?t=mkdir")
+    assert result is None
+
+
 # Get welcome tests
