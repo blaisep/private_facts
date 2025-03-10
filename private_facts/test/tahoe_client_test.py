@@ -3,6 +3,7 @@ from unittest.mock import Mock
 from hello.tahoe_client import TahoeClient
 
 BASE_URL="http://127.0.0.1:3456/"
+WELCOME_RESPONSE = b'{\n "introducers": {\n  "statuses": []\n },\n "servers": [\n  {\n   "nodeid": "v0-5cx26l27quxgeqzcq6hdez35zirk6ybir6zygzz5brl4e4jugsfq",\n   "connection_status": "Connected to tcp:localhost:41737 via tcp",\n   "available_space": 10559796736,\n   "nickname": "storage0",\n   "version": "tahoe-lafs/1.20.0",\n   "last_received_data": 1741634265.924307\n  }\n ]\n}\n'
 
 @pytest.fixture
 def mock_http():
@@ -207,5 +208,13 @@ def test_make_dir_exception(client, mock_http):
         client.make_dir()
 
 
-
 # Get welcome tests
+def test_get_welcome_happy(client, mock_http):
+    mock_response = Mock(status=200, data=WELCOME_RESPONSE)
+    mock_http.request.return_value = mock_response
+
+    result = client.get_welcome()
+
+    mock_http.request.assert_called_once_with("GET", BASE_URL+"?t=json")
+    assert result.status == 200
+    assert result.data == WELCOME_RESPONSE
