@@ -218,3 +218,9 @@ def test_get_welcome_happy(client, mock_http):
     mock_http.request.assert_called_once_with("GET", BASE_URL+"?t=json")
     assert result.status == 200
     assert result.data == WELCOME_RESPONSE
+
+def test_get_welcome_exception(client, mock_http):
+    mock_http.request.side_effect = Exception()
+    
+    with pytest.raises(Exception):
+        client.get_welcome()
