@@ -200,5 +200,12 @@ def test_make_dir_bad_response(client, mock_http):
     mock_http.request.assert_called_once_with("POST", BASE_URL[:-1]+"?t=mkdir")
     assert result is None
 
+def test_make_dir_exception(client, mock_http):
+    mock_http.request.side_effect = Exception()
+    
+    with pytest.raises(Exception):
+        client.make_dir()
+
+
 
 # Get welcome tests
