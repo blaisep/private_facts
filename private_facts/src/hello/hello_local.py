@@ -50,6 +50,7 @@ def main():
     except Exception:
         print("Cannot access Tahoe welcome page. Are you sure the client is running?")
         sys.exit(1)
+    print("Welcome to Private Facts! (powered by Tahoe-LAFS)\n")
     cap_string = upload_string(tahoe_client, TEST_STRING)
     if cap_string is None:
         print("No capability string retrieved; are you sure the client and storage are running and properly configured?")
@@ -57,6 +58,7 @@ def main():
     if get_string(tahoe_client, cap_string) is None:
         print("Are you sure the storage is running?")
         sys.exit(1)
+    print("\nCongratulations! You just stored and retrieved your first data using Private Facts!")
 
 
 if __name__ == "__main__":
