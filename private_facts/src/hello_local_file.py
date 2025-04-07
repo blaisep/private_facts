@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 import urllib3
 
-from .tahoe_client import TahoeClient
+from tahoe_client import TahoeClient
 
 # By default, the Tahoe client listens on port 3456 of the local host.
 BASE_URL="http://127.0.0.1:3456/uri/"

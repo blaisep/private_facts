@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock
-from hello.tahoe_client import TahoeClient
+from tahoe_client import TahoeClient
 
 BASE_URL="http://127.0.0.1:3456/"
 WELCOME_RESPONSE = b'{\n "introducers": {\n  "statuses": []\n },\n "servers": [\n  {\n   "nodeid": "v0-5cx26l27quxgeqzcq6hdez35zirk6ybir6zygzz5brl4e4jugsfq",\n   "connection_status": "Connected to tcp:localhost:41737 via tcp",\n   "available_space": 10559796736,\n   "nickname": "storage0",\n   "version": "tahoe-lafs/1.20.0",\n   "last_received_data": 1741634265.924307\n  }\n ]\n}\n'
