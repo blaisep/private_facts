@@ -1,3 +1,6 @@
+__pycache__/
+*.py[cod]
+*$py.class
 *.pyc
 node_modules
 .idea/
@@ -18,6 +21,9 @@ Thumbs.db
 !.env.example
 !.env.test
 
+# Sphinx documentation
+docs/_build/
+
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
@@ -27,3 +33,18 @@ client0/
 
 scratch*.py
 hello_world_out.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Ruff stuff
+.ruff_cache
