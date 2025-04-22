@@ -10,18 +10,15 @@ import pytest
 from pytest_twisted import async_yield_fixture
 from decouple import config
 
-from gridsync import APP_NAME
-from gridsync.log import initialize_logger
-from gridsync.network import get_free_port
-from gridsync.supervisor import Supervisor
-from gridsync.tahoe import Tahoe
+# from gridsync import APP_NAME
+# from gridsync.log import initialize_logger
+# from gridsync.network import get_free_port
+# from gridsync.supervisor import Supervisor
+# from gridsync.tahoe import Tahoe
 
 
 port = config('PORT')
 
-print(port)
-
-initialize_logger()
 
 
 @async_yield_fixture(scope="module")
@@ -60,3 +57,8 @@ async def tahoe_client(tmp_path_factory, tahoe_server):
     yield client
     await client.stop()
 
+def main():
+    print(f"Port: {port}")
+
+if __name__ == "__main__":
+    main()
