@@ -12,7 +12,7 @@ activate user
     activate pf
         activate tahoe
         pf -> tahoe : HTTP Put row data
-        tahoe -> tahoe : "create a reference"
+        tahoe -> tahoe : create a reference
         tahoe -> tahoe : encrypt
         tahoe --> tahoe : look up storage servers
         tahoe ->  disk : send (shares) to storage server(s)
