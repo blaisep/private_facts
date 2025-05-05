@@ -16,7 +16,7 @@ from gridsync.network import get_free_port
 from gridsync.supervisor import Supervisor
 from gridsync.tahoe import Tahoe
 
-
+# These settings are for the "fake" object. I think
 
 PORT = 3456
 
