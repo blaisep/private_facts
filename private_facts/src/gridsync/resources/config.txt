@@ -1,0 +1,39 @@
+[application]
+name = Gridsync
+description = Secure, distributed storage
+tray_icon = gridsync.png
+tray_icon_sync = gridsync.gif
+
+[build]
+mac_bundle_identifier = io.gridsync.Gridsync
+mac_icon = images/gridsync.icns
+win_icon = images/gridsync.ico
+linux_icon = images/gridsync.svg
+
+[defaults]
+autostart = false
+
+[features]
+grid_invites = true
+magic_folder_invites = true
+multiple_grids = true
+tor = true
+
+[help]
+docs_url = https://github.com/gridsync/gridsync/tree/master/docs
+issues_url = https://github.com/gridsync/gridsync/issues
+recovery_url = https://github.com/gridsync/gridsync/blob/master/docs/recovery-keys.md
+zkaps_url = https://github.com/PrivateStorageio/ZKAPAuthorizer
+
+[logging]
+enabled = true
+max_bytes = 10000000
+backup_count = 1
+
+[sign]
+mac_developer_id = Christopher Wood
+gpg_key = 0xD38A20A62777E1A5
+
+[wormhole]
+appid = tahoe-lafs.org/invite
+relay = ws://wormhole.tahoe-lafs.org:4000/v1
