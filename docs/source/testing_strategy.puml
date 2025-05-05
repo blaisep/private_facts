@@ -1,0 +1,38 @@
+@startuml
+skinparam Shadowing false
+
+actor "Test\nRunner" as pytest
+entity "Tahoe_client_test.py" as user
+entity "Fake Tahoe" as app
+entity "Tahoe Client\n'Object' " as tahoe
+entity "Local\nStorage0" as disk
+
+pytest -> user : Start "Tahoe_client_test.py"
+
+group Test the fake
+activate app
+user --> app : "does it exist?"
+    activate tahoe
+    user-> app : Is the status ok?
+    user-> app : Can we create?
+    user-> app : Can we Review?
+    user-> app: Can we alias?
+    app ->  user : query the fake
+    deactivate tahoe
+app --> user : "Success"
+deactivate app
+end
+pytest -> user : Start "Tahoe_client_test.py"
+
+group Test the Tahoe Object
+user -> disk : create the client
+user -> disk : does "does it exist?"?
+    activate tahoe
+    user-> tahoe : Is the status ok?
+    user-> tahoe : Can we create?
+    user-> tahoe : Can we Review?
+    user-> tahoe: Can we alias?
+    tahoe ->  user : Success
+    deactivate tahoe
+end
+@enduml
