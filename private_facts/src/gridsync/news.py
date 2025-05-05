@@ -13,11 +13,11 @@ from twisted.internet import reactor
 from twisted.internet.defer import Deferred, inlineCallbacks
 from twisted.internet.task import deferLater
 
-from gridsync import settings
+from settings import settings
 
 if TYPE_CHECKING:
-    from gridsync.tahoe import Tahoe
-    from gridsync.types_ import TwistedDeferred
+    from tahoe import Tahoe
+    from types_ import TwistedDeferred
 
 
 class NewscapChecker(QObject):

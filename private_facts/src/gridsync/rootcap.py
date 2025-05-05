@@ -7,11 +7,11 @@ from typing import TYPE_CHECKING, Optional
 from atomicwrites import atomic_write
 from twisted.internet.defer import DeferredLock
 
-from gridsync import APP_NAME
-from gridsync.errors import UpgradeRequiredError
+from settings import APP_NAME
+from errors import UpgradeRequiredError
 
 if TYPE_CHECKING:
-    from gridsync.tahoe import Tahoe  # pylint: disable=cyclic-import
+    from tahoe import Tahoe  # pylint: disable=cyclic-import
 
 
 class RootcapManager:

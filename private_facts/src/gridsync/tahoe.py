@@ -5,6 +5,7 @@ import logging as log
 import os
 import re
 import shutil
+import sys
 from pathlib import Path
 from typing import Optional, Union, cast
 
@@ -15,28 +16,33 @@ from twisted.internet.defer import Deferred
 from twisted.internet.error import ConnectError
 from twisted.internet.interfaces import IReactorTime
 
-from gridsync import APP_NAME, grid_settings
-from gridsync import settings as global_settings
-from gridsync.capabilities import diminish
-from gridsync.config import Config
-from gridsync.crypto import trunchash
-from gridsync.errors import (
+from settings import APP_NAME, grid_settings
+from settings import settings as global_settings
+from capabilities import diminish
+from config import Config
+from crypto import trunchash
+from errors import (
     TahoeCommandError,
     TahoeWebError,
     UpgradeRequiredError,
 )
-from gridsync.log import MultiFileLogger, NullLogger
-from gridsync.magic_folder import MagicFolder
-from gridsync.monitor import Monitor
-from gridsync.msg import critical
-from gridsync.news import NewscapChecker
-from gridsync.rootcap import RootcapManager
-from gridsync.supervisor import Supervisor
-from gridsync.system import SubprocessProtocol, which
-from gridsync.util import Poller
-from gridsync.websocket import WebSocketReaderService
-from gridsync.zkapauthorizer import PLUGIN_NAME as ZKAPAUTHZ_PLUGIN_NAME
-from gridsync.zkapauthorizer import ZKAPAuthorizer
+from log import MultiFileLogger, NullLogger
+from magic_folder import MagicFolder
+from monitor import Monitor
+from msg import critical
+from news import NewscapChecker
+from rootcap import RootcapManager
+from supervisor import Supervisor
+from system import SubprocessProtocol, which
+from util import Poller
+from websocket import WebSocketReaderService
+from zkapauthorizer import PLUGIN_NAME as ZKAPAUTHZ_PLUGIN_NAME
+from zkapauthorizer import ZKAPAuthorizer
+
+
+
+
+
 
 
 def is_valid_furl(furl: str) -> bool:

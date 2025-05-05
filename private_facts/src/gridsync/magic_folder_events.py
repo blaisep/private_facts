@@ -8,7 +8,7 @@ from enum import Enum, auto
 
 from qtpy.QtCore import QObject, Signal, Slot
 
-from gridsync.websocket import WebSocketReaderService
+from websocket import WebSocketReaderService
 
 
 class MagicFolderStatus(Enum):

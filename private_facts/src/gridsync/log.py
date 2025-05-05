@@ -7,8 +7,8 @@ from typing import Optional, Union
 
 from twisted.python.log import PythonLoggingObserver, startLogging
 
-from gridsync import APP_NAME, config_dir, settings
-from gridsync.util import to_bool
+from settings import APP_NAME, config_dir, settings
+from util import to_bool
 
 _logging_settings = settings.get("logging", {})
 

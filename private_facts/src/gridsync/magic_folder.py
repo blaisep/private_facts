@@ -20,20 +20,20 @@ if TYPE_CHECKING:
     from gridsync.tahoe import Tahoe  # pylint: disable=cyclic-import
     from gridsync.types_ import JSON
 
-from gridsync import APP_NAME
-from gridsync.capabilities import diminish
-from gridsync.crypto import randstr
-from gridsync.filter import is_eliot_log_message
-from gridsync.log import MultiFileLogger, NullLogger
-from gridsync.magic_folder_events import (
+from settings import APP_NAME
+from capabilities import diminish
+from crypto import randstr
+from filter import is_eliot_log_message
+from log import MultiFileLogger, NullLogger
+from magic_folder_events import (
     MagicFolderEventHandler,
     MagicFolderEventsMonitor,
     MagicFolderStatus,
 )
-from gridsync.msg import critical
-from gridsync.supervisor import Supervisor
-from gridsync.system import SubprocessProtocol, which
-from gridsync.watchdog import Watchdog
+from msg import critical
+from supervisor import Supervisor
+from system import SubprocessProtocol, which
+from watchdogs import Watchdog
 
 
 class MagicFolderError(Exception):
