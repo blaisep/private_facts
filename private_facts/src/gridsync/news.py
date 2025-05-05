@@ -13,7 +13,7 @@ from twisted.internet import reactor
 from twisted.internet.defer import Deferred, inlineCallbacks
 from twisted.internet.task import deferLater
 
-from settings import settings
+from .settings import settings
 
 if TYPE_CHECKING:
     from tahoe import Tahoe

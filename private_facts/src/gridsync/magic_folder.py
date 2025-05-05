@@ -17,23 +17,23 @@ from twisted.internet.error import ConnectionRefusedError as ConnectionRefused
 from twisted.internet.task import deferLater
 
 if TYPE_CHECKING:
-    from gridsync.tahoe import Tahoe  # pylint: disable=cyclic-import
-    from gridsync.types_ import JSON
+    from .tahoe import Tahoe  # pylint: disable=cyclic-import
+    from .types_ import JSON
 
-from settings import APP_NAME
-from capabilities import diminish
-from crypto import randstr
-from filter import is_eliot_log_message
-from log import MultiFileLogger, NullLogger
-from magic_folder_events import (
+from .settings import APP_NAME
+from .capabilities import diminish
+from .crypto import randstr
+from .filter import is_eliot_log_message
+from .log import MultiFileLogger, NullLogger
+from .magic_folder_events import (
     MagicFolderEventHandler,
     MagicFolderEventsMonitor,
     MagicFolderStatus,
 )
-from msg import critical
-from supervisor import Supervisor
-from system import SubprocessProtocol, which
-from watchdogs import Watchdog
+from .msg import critical
+from .supervisor import Supervisor
+from .system import SubprocessProtocol, which
+from .watchdog_ import Watchdog
 
 
 class MagicFolderError(Exception):

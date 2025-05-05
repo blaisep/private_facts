@@ -12,8 +12,8 @@ from twisted.internet.defer import Deferred, inlineCallbacks
 from twisted.internet.error import ConnectError
 from twisted.internet.task import LoopingCall
 
-from errors import TahoeWebError
-from types_ import TwistedDeferred
+from .errors import TahoeWebError
+from .types_ import TwistedDeferred
 
 if TYPE_CHECKING:
     from tahoe import Tahoe

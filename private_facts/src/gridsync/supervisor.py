@@ -9,12 +9,12 @@ from psutil import Process
 from twisted.internet import reactor
 from twisted.internet.defer import inlineCallbacks
 
-from system import (
+from .system import (
     SubprocessProtocol,
     terminate,
     terminate_if_matching,
 )
-from types_ import TwistedDeferred
+from .types_ import TwistedDeferred
 
 
 def parse_pidfile(pidfile: Path) -> tuple[int, float]:

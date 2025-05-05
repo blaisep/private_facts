@@ -16,28 +16,28 @@ from twisted.internet.defer import Deferred
 from twisted.internet.error import ConnectError
 from twisted.internet.interfaces import IReactorTime
 
-from settings import APP_NAME, grid_settings
-from settings import settings as global_settings
-from capabilities import diminish
-from config import Config
-from crypto import trunchash
-from errors import (
+from .settings import APP_NAME, grid_settings
+from .settings import settings as global_settings
+from .capabilities import diminish
+from .config import Config
+from .crypto import trunchash
+from .errors import (
     TahoeCommandError,
     TahoeWebError,
     UpgradeRequiredError,
 )
-from log import MultiFileLogger, NullLogger
-from magic_folder import MagicFolder
-from monitor import Monitor
-from msg import critical
-from news import NewscapChecker
-from rootcap import RootcapManager
-from supervisor import Supervisor
-from system import SubprocessProtocol, which
-from util import Poller
-from websocket import WebSocketReaderService
-from zkapauthorizer import PLUGIN_NAME as ZKAPAUTHZ_PLUGIN_NAME
-from zkapauthorizer import ZKAPAuthorizer
+from .log import MultiFileLogger, NullLogger
+from .magic_folder import MagicFolder
+from .monitor import Monitor
+from .msg import critical
+from .news import NewscapChecker
+from .rootcap import RootcapManager
+from .supervisor import Supervisor
+from .system import SubprocessProtocol, which
+from .util import Poller
+from .websocket import WebSocketReaderService
+from .zkapauthorizer import PLUGIN_NAME as ZKAPAUTHZ_PLUGIN_NAME
+from .zkapauthorizer import ZKAPAuthorizer
 
 
 

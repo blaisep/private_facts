@@ -7,8 +7,8 @@ from typing import Optional, Union
 
 from twisted.python.log import PythonLoggingObserver, startLogging
 
-from settings import APP_NAME, config_dir, settings
-from util import to_bool
+from .settings import APP_NAME, config_dir, settings
+from .util import to_bool
 
 _logging_settings = settings.get("logging", {})
 

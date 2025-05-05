@@ -5,11 +5,11 @@ import json
 import os
 from typing import TYPE_CHECKING, Optional
 
-from settings import autostart_file_path, config_dir, pkgdir
-from crypto import trunchash
+from .settings import autostart_file_path, config_dir, pkgdir
+from .crypto import trunchash
 
 if TYPE_CHECKING:
-    from core import Core
+    from .core import Core
 
 
 def is_eliot_log_message(s: str) -> bool:

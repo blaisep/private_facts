@@ -10,10 +10,10 @@ import pytest
 from pytest_twisted import async_yield_fixture
 from decouple import config
 
-from gridsync import APP_NAME
-from gridsync.log import initialize_logger
-from gridsync.network import get_free_port
-from gridsync.supervisor import Supervisor
+# from gridsync import APP_NAME
+# from gridsync.log import initialize_logger
+# from gridsync.network import get_free_port
+# from gridsync.supervisor import Supervisor
 from gridsync.tahoe import Tahoe
 
 # These settings are for the "fake" object. I think

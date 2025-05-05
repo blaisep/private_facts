@@ -13,8 +13,8 @@ from twisted.internet.error import ProcessDone
 from twisted.internet.protocol import ProcessProtocol
 from twisted.internet.task import deferLater
 
-from settings import APP_NAME
-from types_ import TwistedDeferred
+from .settings import APP_NAME
+from .types_ import TwistedDeferred
 
 if TYPE_CHECKING:
     from twisted.python.failure import Failure

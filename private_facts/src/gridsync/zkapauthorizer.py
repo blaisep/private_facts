@@ -10,12 +10,12 @@ import treq
 from autobahn.twisted.websocket import create_client_agent
 from twisted.internet.defer import Deferred, inlineCallbacks
 
-from errors import TahoeWebError
-from types_ import TwistedDeferred
-from voucher import generate_voucher
+from .errors import TahoeWebError
+from .types_ import TwistedDeferred
+from .voucher import generate_voucher
 
 if TYPE_CHECKING:
-    from tahoe import Tahoe  # pylint: disable=cyclic-import
+    from .tahoe import Tahoe  # pylint: disable=cyclic-import
 
 PLUGIN_NAME = "privatestorageio-zkapauthz-v2"
 

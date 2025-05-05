@@ -10,7 +10,7 @@ from nacl.secret import SecretBox
 from nacl.utils import random
 from qtpy.QtCore import QObject, Signal
 
-from util import b58decode, b58encode
+from .util import b58decode, b58encode
 
 
 def randstr(length: int = 32, alphabet: str = "") -> str:
