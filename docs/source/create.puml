@@ -1,0 +1,28 @@
+@startuml
+skinparam Shadowing false
+
+actor "User\nApp" as user
+entity "Private\nFacts" as pf
+Boundary "Tahoe\n'Gateway Client' " as tahoe
+Boundary "Tahoe\nStorageServer" as disk
+
+group Create content
+activate user
+    user --> pf : "A row of facts"
+    activate pf
+        activate tahoe
+        pf -> tahoe : HTTP Put row data
+        tahoe -> tahoe : create a reference
+        tahoe -> tahoe : encrypt
+        tahoe --> tahoe : look up storage servers
+        tahoe ->  disk : send (shares) to storage server(s)
+tahoe <-- disk : return storage URL
+        tahoe -> pf : return cap string
+        deactivate tahoe
+    pf -> user : returns a cap string
+    deactivate pf
+    user --> user : "store row + cap string"
+user --> user : update UI
+deactivate user
+end
+@enduml
