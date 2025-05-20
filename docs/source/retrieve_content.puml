@@ -1,12 +1,22 @@
 @startuml
-skinparam Shadowing false
-
-actor "User" as user
-entity "Simple\nFacts" as app
+<style>
+    Element {
+        LineColor : #403f3e; }
+    sequenceDiagram {
+        actor {
+          FontColor: darkblue;
+        }
+      arrow {
+      FontColor: darkblue;
+      LineColor: blue;
+        }
+</style>
+actor "User\nApp" as user
+entity "Private\nFacts" as app
 entity "Tahoe\n'Client' " as tahoe
-collections "Tahoe\nStorage0" as disk
+collections "Tahoe\nGrid" as disk
 
-group Retrieve
+group Read
 activate app
 user --> app : Request content
 app -> tahoe : HTTP Get... URI
@@ -16,7 +26,7 @@ app -> tahoe : HTTP Get... URI
     tahoe <--  disk : return the shares
     tahoe -> tahoe : decrypt content
     tahoe -> app : return content
-    app -> user : display content
+    app --> user : display content
     deactivate tahoe
 deactivate app
 end
