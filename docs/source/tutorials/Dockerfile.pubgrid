@@ -1,0 +1,23 @@
+FROM docker.io/library/python:3-buster
+
+VOLUME /opt/tahoe/pubgrid-client
+EXPOSE 3457
+
+# Install Tahoe (and a mountain of dependencies) from PyPi into a venv
+RUN  pip install attrs==23.2.0 'cryptography<42' tahoe-lafs
+
+
+# Install create a client instance, configured to use the public test grid
+# copy the config into the local directory ./pubgrid-client
+WORKDIR /opt/tahoe
+RUN tahoe create-client \
+    --nickname=pubgrid \
+    --basedir=pubgrid-client \
+    --introducer=pb://flm2vcjxaxoyah3f2ufdk74augada55i@tcp:testgrid.tahoe-lafs.org:5000/s3kbdgg3j4ohifa633tt7yi25drl6jqa \
+    --webport=tcp:3457:interface=0.0.0.0\
+    --shares-happy=3 \
+    --shares-needed=2 \
+    --shares-total=3
+
+# Start the client instance listening on local host port 3457
+CMD tahoe run  /opt/tahoe/pubgrid-client

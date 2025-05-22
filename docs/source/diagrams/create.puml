@@ -1,17 +1,32 @@
 @startuml
-skinparam Shadowing false
+<style>
+    sequenceDiagram {
+        group {
+        ' a light gray for the border.
+             linecolor : #b3b1af;
+        }
+        linecolor: #636260
+        actor {
+          FontColor: darkblue;
+          LineColor: darkblue;
+        }
+      arrow {
+      FontColor: darkblue;
+      LineColor: blue;
+        }
+</style>
 
 actor "User\nApp" as user
 entity "Private\nFacts" as pf
 Boundary "Tahoe\n'Gateway Client' " as tahoe
-Boundary "Tahoe\nStorageServer" as disk
+database "Tahoe\nStorage Client" as disk
 
 group Create content
 activate user
     user --> pf : "A row of facts"
     activate pf
         activate tahoe
-        pf -> tahoe : HTTP Put row data
+        pf -> tahoe : HTTP PUT row data
         tahoe -> tahoe : create a reference
         tahoe -> tahoe : encrypt
         tahoe --> tahoe : look up storage servers

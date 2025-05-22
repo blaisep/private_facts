@@ -1,0 +1,15 @@
+<style>
+    sequenceDiagram {
+        linecolor: #636260
+        group {
+             linecolor : #b3b1af;
+        }
+        actor {
+          FontColor: darkblue;
+          LineColor: darkblue;
+        }
+        arrow {
+        FontColor: darkblue;
+        LineColor: blue;
+        }
+</style>
