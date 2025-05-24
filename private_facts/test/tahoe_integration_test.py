@@ -4,6 +4,7 @@ import os
 import sys
 from pathlib import Path
 
+import pytest
 from pytest_twisted import ensureDeferred, inlineCallbacks
 from twisted.internet.defer import Deferred
 
@@ -60,7 +61,7 @@ async def test_upload_convergence_secret_determines_cap(
         "lnviruztzbcugtpkrxnnodehpstlcoo6pswfgqjhv3teyn656fja:1:1:64",
     )
 
-
+@pytest.mark.skip(reason="Requires zkapauthorizer")
 @ensureDeferred
 async def test_no_html_in_server_error(zkapauthorizer):
     try:
