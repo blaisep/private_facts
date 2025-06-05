@@ -11,6 +11,14 @@ This series of steps will cover the following milestones:
     * use Tahoe-LAFS as a backing store for that simple FastAPI app
     * integrate a more complex data model from the FastAPI using SQLite and Tahoe-LAFS
 
+Team Internal notes
+===================
+
+.. toctree::
+    :titlesonly:
+
+    decisions
+    cases
 
 What happens when you use Private Facts?
 ========================================

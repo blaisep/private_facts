@@ -1,20 +1,5 @@
 @startuml
-<style>
-    sequenceDiagram {
-        group {
-        ' a light gray for the border.
-             linecolor : #b3b1af;
-        }
-        linecolor: #636260
-        actor {
-          FontColor: darkblue;
-          LineColor: darkblue;
-        }
-      arrow {
-      FontColor: darkblue;
-      LineColor: blue;
-        }
-</style>
+<style-file=privatefacts.css>
 
 actor "User\nApp" as user
 entity "Private\nFacts" as pf
