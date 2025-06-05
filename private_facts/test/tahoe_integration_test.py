@@ -8,8 +8,8 @@ import pytest
 from pytest_twisted import ensureDeferred, inlineCallbacks
 from twisted.internet.defer import Deferred
 
-from private_facts.src.gridsync.settings import APP_NAME
-from private_facts.src.gridsync.errors import TahoeWebError
+from gridsync.settings import APP_NAME
+from gridsync.errors import TahoeWebError
 
 if sys.platform == "darwin":
     application_bundle_path = str(

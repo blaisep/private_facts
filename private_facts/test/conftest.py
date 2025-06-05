@@ -18,7 +18,6 @@ from decouple import config
 # from gridsync.log import initialize_logger
 # from gridsync.network import get_free_port
 # from gridsync.supervisor import Supervisor
-from private_facts.src.gridsync.tahoe import Tahoe
 from gridsync.tahoe import Tahoe
 from gridsync.settings import APP_NAME
 
