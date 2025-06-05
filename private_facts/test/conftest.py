@@ -42,6 +42,7 @@ else:
 
 os.environ["PATH"] = application_bundle_path + os.pathsep + os.environ["PATH"]
 
+# Network settings for the embedded server
 @async_yield_fixture(scope="module")
 async def tahoe_server(tmp_path_factory):
     server = Tahoe(tmp_path_factory.mktemp("tahoe_server") / "nodedir")
@@ -55,7 +56,7 @@ async def tahoe_server(tmp_path_factory):
     yield server
     await server.stop()
 
-
+# Storage Node settings for the embedded server
 @async_yield_fixture(scope="module")
 async def tahoe_client(tmp_path_factory, tahoe_server):
     client = Tahoe(tmp_path_factory.mktemp("tahoe_client") / "nodedir")

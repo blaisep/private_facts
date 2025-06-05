@@ -1,6 +1,13 @@
 # Copyright 2020 Least Authority TFA GmbH
 # See COPYING for details.
 
+# This is a pythonic library to talk the REST-ful Web API
+# of a Tahoe-LAFS client (daemon) (really an API gateway).
+# Configuration and running of that gateway is documented elsewhere.
+#
+# See https://tahoe-lafs.readthedocs.io/en/latest/running.html#running-a-client
+# See https://tahoe-lafs.readthedocs.io/en/latest/frontends/webapi.html
+
 import json
 
 from twisted.internet.defer import (
