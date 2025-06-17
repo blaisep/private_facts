@@ -23,7 +23,9 @@ def data_file():
 def test_create_client_happy(client, mock_http):
     assert client.base_url == BASE_URL
     assert client.http is mock_http
-    
+
+
+
 def test_create_client_no_url(mock_http):
     with pytest.raises(TypeError) as e:
         client = TahoeClient(mock_http)
@@ -43,11 +45,21 @@ def test_create_client_no_http():
     assert "http" in error_message
 
 # Upload data tests
-def test_upload_data_happy(client, mock_http):
+def test_upload_data_immutable_happy(client, mock_http):
     mock_response = Mock(status=200, data=b"cap_string")
     mock_http.request.return_value = mock_response
 
     result = client.upload_data("test data")
+
+    mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
+    assert result == "cap_string"
+
+
+def test_upload_data_mutable_happy(client, mock_http):
+    mock_response = Mock(status=200, data=b"cap_string")
+    mock_http.request.return_value = mock_response
+
+    result = client.upload_data("test data", mutable=True)
 
     mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
     assert result == "cap_string"

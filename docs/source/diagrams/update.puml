@@ -1,0 +1,19 @@
+@startuml
+
+actor "Tahoe_client_test.py" as pf
+Boundary "Tahoe_client.py" as tahoe
+
+group UPDATE mutables - Happy
+    pf -> tahoe : upload string "testdata"
+    activate pf
+        activate tahoe
+        tahoe -> pf :  cap_string , 200
+        pf -> tahoe : update cap_string to "datatest"
+        tahoe -> pf : cap_string , 201
+        pf -> tahoe : read from cap_string
+        tahoe -> pf: "datatest"
+        deactivate tahoe
+        pf -> pf : assert "datatest"
+end
+    deactivate pf
+@enduml

@@ -30,6 +30,7 @@ dependencies = [
 hello = "private_facts.src.hello.hello_local:main"
 hello_file = "private_facts.src.hello.hello_local_file:main"
 hello_system = "private_facts.src.hello.hello_local_filesystem:main"
+hello_mutable = "private_facts.src.hello.hello_local_mutable:main"
 fake_server = "private_facts.src.fake_server:main"
 
 [tool.hatch.build]

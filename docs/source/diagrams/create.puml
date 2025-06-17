@@ -1,5 +1,4 @@
 @startuml
-<style-file=privatefacts.css>
 
 actor "User\nApp" as user
 entity "Private\nFacts" as pf

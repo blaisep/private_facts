@@ -95,3 +95,9 @@ Data Plane
 
 Content over HTTPS
 
+
+Mutable: SDMF vs NDMF
+----------------------
+
+Use SDMF for the initial small file scenarios. Later, with more elaborate file types like images and movies.
+
