@@ -1,3 +1,8 @@
+"""
+This is a REST API client library for sending CRUD operations to a Tahoe API gateway.
+The tests for this are in test.tahoe_client_test.py .
+"""
+
 class TahoeClient:
     """
     The TahoeClient object makes requests to and returns responses from a locally running Tahoe client.
