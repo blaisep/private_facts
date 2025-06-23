@@ -58,10 +58,11 @@ def test_upload_data_immutable_happy(client, mock_http):
 def test_upload_data_mutable_happy(client, mock_http):
     mock_response = Mock(status=200, data=b"cap_string")
     mock_http.request.return_value = mock_response
+    request_url = BASE_URL + "?format=SDMF"
 
     result = client.upload_data("test data", mutable=True)
 
-    mock_http.request.assert_called_once_with("PUT", BASE_URL, "test data")
+    mock_http.request.assert_called_once_with("PUT", request_url, "test data", None)
     assert result == "cap_string"
 
 def test_upload_data_bad_response(client, mock_http):
