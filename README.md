@@ -1,3 +1,6 @@
+## Note:
+Development of Private Facts has moved to a [new repo](https://github.com/private-facts/private-facts). This one is kept up for historical interest only.
+
 # Private Facts
 
 Private Facts is a web app to track your private info. 
