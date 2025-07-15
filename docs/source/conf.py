@@ -6,7 +6,7 @@ extensions = ['sphinx.ext.autodoc',
               ]
 
 templates_path = ['_templates']
-source_suffix = ['.rst', '.md']
+source_suffix = {'.rst': 'restructuredtext', '.md': 'restructuredtext'}
 master_doc = 'index'
 project = u'Tahoe-LAFS'
 copyright = u'2025, The Tahoe-LAFS Developers'
